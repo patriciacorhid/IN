@@ -15,6 +15,8 @@
 \usepackage{xcolor}
 
 \usepackage{caption}
+\captionsetup[table]{labelformat=empty}
+\captionsetup[figure]{labelformat=empty}
 
 \usepackage{enumerate} % paquete para poder personalizar fÃ¡cilmente la apariencia de las listas enumerativas
 
@@ -143,14 +145,65 @@ Para elegir que procesamiento utilizabamos en la práctica 1, nos decantamos por
   \subfigure[Random Forest]{\includegraphics[width=60mm]{imagenes/rf}}
 \end{figure}
 
-Como ya hemos visto antes, no hay gran diferencia entre unos y otros. 
+Como ya hemos visto antes, no hay gran diferencia entre unos y otros. En el modelo ZeroR la \texttt{F1-Score} es $0$ en los tres casos, debido a que etiqueta todas las muestras como negaticas, luego no hay verdaderos positivos. En los modelos SVM, MLP, Random Forest y K-nn el procesamiento de datos 2 parece tener resultados ligeramente inferiores que los otros dos, que están muy igualados. En el árbol de decisión el procesamiento 2 tiene un mejor desempeño que el 1, pero peor que el 3. Este modelo es el que peores resultados ofrece sin considerar el ZeroR. Como podemos obsservar que el eje $Y$ no llega a $0.8$ como en los demás.
+
+Al igual que en la práctica 1, el procesado de datos  que usaría usando la información recogida en estas gráficas sería el procesado 3, porque en el árbol de decisión se ve que es el que mejores resultados ofrece y en el resto de modelos la diferencia con el procesado 1 no puedo apreciarla a simple vista.
+
+Para crear las gráficas primero se crearon para cada modelo vector que contiene el valor de la métrica \texttt{F1-Score} de cada uno de los preprocesados:
+
+\begin{lstlisting}
+v_zeror = [p1_f1[0], p2_f1[0], p3_f1[0]]
+v_svm   = [p1_f1[1], p2_f1[1], p3_f1[1]]
+v_knn   = [p1_f1[2], p2_f1[2], p3_f1[2]]
+v_arbol = [p1_f1[3], p2_f1[3], p3_f1[3]]
+v_mlp   = [p1_f1[4], p2_f1[4], p3_f1[4]]
+v_rf    = [p1_f1[5], p2_f1[5], p3_f1[5]]
+\end{lstlisting}
+
+Tras esto, para cada uno de los modelos creamos la gráfica correspondiente así:
+
+\begin{lstlisting}
+fig, ax = plt.subplots()
+ax.bar(["P1", "P2", "P3"], v_clf, color='blue')
+ax.set_title("clf")
+\end{lstlisting}
+
+donde ``clf'' denota el clasificador del que recogemos los datos en la gráfica.  
 
 \subsection{Curva ROC}
 
+Tras aplicar el procesamiento 3 y seleccionar los hiperparámetros que consideré oportunos, podemos representar en una gráfica la curva ROC de los diferentes modelos y así comparar su desempeño.
+
+El código para dibujar la curva ROC es:
+
+\begin{lstlisting}
+ax = plt.gca()
+
+for model in [dummy_clf, svm_clf, knn_clf, tree_clf, mlp_clf, rf_clf]:
+    metrics.plot_roc_curve(model, data, target, ax=ax)  
+\end{lstlisting}
+
+Donde los modelos que se le pasan son los entrenados con validación cruzada y los datos, \texttt{data}, han sido normalizados previamente usando \texttt{MinMaxScaler}, ya que la normalización de los datos forma parte del procesado 3 pero se realizaba en la función \texttt{validacion\_cruzada}.
+
+El resultado es:
+
 \begin{figure}[H]
   \centering
-  \subfigure[Curva ROC]{\includegraphics[width=150mm]{imagenes/ROC}}
+  \caption{Curva ROC}
+  \includegraphics[width=150mm]{imagenes/ROC}
 \end{figure}
+
+Los modelos que presentan mayor métrica \texttt{AUC} son el Random Forest y el K-nn, son aquellos con mayor área bajo la curva ROC y los que tienen una mayor pendiente en los valores cercanos al cero. Esto implica que estos clasificadores son capaces de incrementar el número de verdaderos positivos a un ritmo mayor que el número de falsos positivos. Si usásemos esta métrica para sacar conclusiones, éstos serían los mejores modelos, mientras que el árbol de decisión y MLP son los modelos que peor comportamiento muestran, excluyendo al ZeroR. A pesar de esto, no hay excesivas diferencias entro los modelos considerados, a excepción del ZeroR.
+
+\subsection{Análisis de los atributos}
+
+
+\begin{figure}[H]
+  \centering
+  \caption{Cantidad de datos con cada etiqueta}
+  \includegraphics[width=100mm]{imagenes/count}
+\end{figure}
+
 
 \section{Segmentación}
 
