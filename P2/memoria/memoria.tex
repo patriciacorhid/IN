@@ -197,13 +197,82 @@ Los modelos que presentan mayor métrica \texttt{AUC} son el Random Forest y el 
 
 \subsection{Análisis de los atributos}
 
+En esta sección estudiaremos la importancia de los diferentes atributos en la clasificación. Para ello se visualizarán gráficos de barras para cada uno de los diferentes atributos y para cada una de las etiquetas, de manera que se muestre la distribución de los valores que toma dicho atributo en función de su etiqueta. También visualizaremos los diagramas de cajas, ``boxplots'', de aquellos atributos donde tenga sentido.\\
+
+Empezamos mostrando las gráficas correspondientes al atributo \texttt{BI-RADS}:
 
 \begin{figure}[H]
   \centering
   \caption{Cantidad de datos con cada etiqueta}
-  \includegraphics[width=100mm]{imagenes/count}
+  \includegraphics[width=100mm]{imagenes/bi_rads}
 \end{figure}
 
+Este atributo representa la opinión de un médico experto sobre la gravedad del tumor. Si tiene el valor ``1'' o ``2'', el tumor es benigno, del mismo modo, si toma el valor ``6'' es maligno. Los valores ``3'', ``4'' y ``5'' designan casos en los que no se está seguro de la severidad del tumor, pero hay cierta probabilidad de que sea maligno o benigno. Esta información la podemos comprobar en \href{https://es.wikipedia.org/wiki/BI-RADS}{https://es.wikipedia.org/wiki/BI-RADS}. Este atributo da mucha información sobre la naturaleza del tumor, pero dado que necesitamos la opinión de un experto para obtenerlo, no es apropiado usarlo para el aprendizaje.
+
+Según la página \href{https://bigml.com/user/TotyB/gallery/dataset/509a98c6035d0706dd0001dd}{https://bigml.com/user/TotyB/gallery/dataset/509a98c6035d0706dd0001dd}, de donde hemos obtenido los datos, el $94.46\%$ de estos tienen \texttt{BI-RADS} ``4'' o ``5''. De estos, los tumores con valor ``5'' son probablemente malignos. Los tumores malignos tienen más variabilidad que los benignos, dado que hay tumores malignos con valor de \texttt{BI-RADS} ``4'' o ``5'', predominando el valor ``5''. En el caso de los benignos, la mayoría de estos tienen la categoría de \texttt{BI-RADS} ``4''.
+
+Esto se ve en el diagrama de cajas de este atributo:
+
+\begin{figure}[H]
+  \centering
+  \caption{Diagrama de cajas de BI-RADS}
+  \includegraphics[width=100mm]{imagenes/bp_birads}
+\end{figure}
+
+Los tumores etiquetados como malignos se mueven entre el valor ``4'' o ``5'' mientras que la mayoría de los benignos toman el valor ``4''.
+
+La gráfica del atributo edad nos proporciona los siguientes resultados:
+
+\begin{figure}[H]
+  \centering
+  \caption{Cantidad de datos con cada etiqueta}
+  \includegraphics[width=87mm]{imagenes/edad_ben}
+  \includegraphics[width=87mm]{imagenes/edad_mal}
+\end{figure}
+
+Vemos que cuanto menor edad tiene una persona, más probable es que su tumor sea benigno. En particular, la mayoría de las personas menores de $31$ años de la muestra tienen tumores benignos y gran parte de las que tienen más de $83$ tienen tumores malignos. En el diagrama de cajas podemos observar que la mediana de edad de los pacientes con tumores malignos de la muestra es superior a los $60$ años, mientras que la de los pacientes con tumores benignos está rondando los $50$. Aunque la edad de los pacientes con tumores benignos varía entre los $18$ y algo más de los $80$ años, los datos entre el primer y el tercer cuartil se encuentran concentrados entre los $40$ y $60$. Los datos entre el primer y el tercer cuartil de los tumores malignos se encuentran entre algo más de los $50$ y algo más de los $70$ años.
+
+Por consiguiente, la edad de una persona sí es un atributo relevamte en la clasificación, porque aunque no podríamos estimar la severidad del tumor sabiendo sólo la edad de ésta, si una persona es muy joven podríamos esperar que su tumor sea benigno. 
+
+\begin{figure}[H]
+  \centering
+  \caption{Diagrama de cajas de la edad}
+  \includegraphics[width=87mm]{imagenes/bp_age}
+\end{figure}
+
+A continuación, analizaremos las gráficas del atributo Shape. La mayoría de los tumores malignos tienen una forma irregular, mientras que los benignos suelen tener una forma ovalada o redondeada. Los tumores benignos presentan mayor variabilidad en los valores que toman en este atributo que los malignos. Resulta interesante considerar este atributo para nuestro aprendizaje, ya que la distribución de los valores que toman los tumores malignos difiere bastante de la de los benignos.\\
+
+\begin{figure}[H]
+  \centering
+  \caption{Cantidad de datos con cada etiqueta}
+  \includegraphics[width=87mm]{imagenes/shape}
+\end{figure}
+
+Como el atributo Shape es cualitativo y no tiene orden, no tiene sentido dibujar un diagrama de cajas en este caso, ya que este variaría para cada asignación diferente de valores numéricos a cada posible valor del atributo, y esta asignación es totalmente aleatoria, ya que estos carecen de orden.\\
+
+El siguiente atributo a analizar es Margin. Al igual que en Shape, los distintos valores que toma este atributo no tienen un orden determinado, por lo tanto no representé el diagrama de cajas de este atributo. Los tumores malignos tienen mayor variabilidad que los benignos, siendo el valor de Margin más frecuente entre estos ``ill-defined'' seguido del ``spiculated''. Los benignos, sin embargo, suelen tener margin ``circumscribed''. En la práctica 1, una vez eliminados los atributos \texttt{BI-RADS} y Density, vimos que este atributo era el que mayor información nos aportaba en la clasificación, dado que era el elegido en el nodo raíz del árbol de decisión. Aquí podemos comprobar que efectivamente hay una gran diferencia entre la distribución de los valores de Margin que toman los tumores malignos de los benignos, cosa que afecta favorablemente a la clasificación, permitiéndonos diferenciar una muestra maligna de una benigna con mayor facilidad.
+
+\begin{figure}[H]
+  \centering
+  \caption{Cantidad de datos con cada etiqueta}
+  \includegraphics[width=87mm]{imagenes/margin}
+\end{figure}
+
+Por último, analizamos el atributo Density. Como ya comentamos, este atributo tiene muy poca variabilidad en la muestra y podemos comprobar que los dos diagramas de barras son muy parecidos, lo que nos incita a pensar que este atributo no aporta apenas información a la clasificación.
+
+\begin{figure}[H]
+  \centering
+  \caption{Cantidad de datos con cada etiqueta}
+  \includegraphics[width=87mm]{imagenes/density}
+\end{figure}
+
+En el diagrama de cajas volvemos a apreciar la poca variabilidad de este atributo, ya que cualquier valor distinto de $3$ lo interpreta como outlayer. Esta razón fue la que me llevó a considerar eliminar este atributo durante el procesado de datos $3$.
+
+\begin{figure}[H]
+  \centering
+  \caption{Diagrama de cajas de Density}
+  \includegraphics[width=65mm]{imagenes/bp_density}
+\end{figure}
 
 \section{Segmentación}
 
