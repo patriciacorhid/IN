@@ -172,9 +172,14 @@ donde ``clf'' denota el clasificador del que recogemos los datos en la gráfica.
 
 \subsection{Curva ROC}
 
-Tras aplicar el procesamiento 3 y seleccionar los hiperparámetros que consideré oportunos, podemos representar en una gráfica la curva ROC de los diferentes modelos y así comparar su desempeño.
+Para representar la curva ROC dividimos el conjunto de datos al que se le ha aplicado el procesado 3 salvo la normalización en comjunto de entrenamiento y conjunto de validación. La división se hace de manera que el $70\%$ de los datos formen el conjunto de entrenamiento y el otro $30\%$, el de test, conservando la proporción de elementos en cada clase tanto en el conjunto de entrenamiento como en el de validación. Esto se hace con el código:
 
-El código para dibujar la curva ROC es:
+\begin{lstlisting}
+  X_train, X_test, y_train, y_test = model_selection.train_test_split(data, target,
+  test_size=0.3, stratify=target, random_state=0)
+\end{lstlisting}
+
+Tras esto,, completamos el procesado de datos $3$ usando \texttt{MinMaxScaler()} para normalizar los datos de entrenamiento y se usa estas mismas transformaciones sobre los datos de validación. A continuación, entrené los modelos con los hiperparámetros seleccionados en la práctica anterior. Podemos representar en una gráfica la curva ROC de los diferentes modelos así:
 
 \begin{lstlisting}
 ax = plt.gca()
@@ -183,17 +188,15 @@ for model in [dummy_clf, svm_clf, knn_clf, tree_clf, mlp_clf, rf_clf]:
     metrics.plot_roc_curve(model, data, target, ax=ax)  
 \end{lstlisting}
 
-Donde los modelos que se le pasan son los entrenados con validación cruzada y los datos, \texttt{data}, han sido normalizados previamente usando \texttt{MinMaxScaler}, ya que la normalización de los datos forma parte del procesado 3 pero se realizaba en la función \texttt{validacion\_cruzada}.
-
 El resultado es:
 
 \begin{figure}[H]
   \centering
   \caption{Curva ROC}
-  \includegraphics[width=150mm]{imagenes/ROC}
+  \includegraphics[width=131mm]{imagenes/ROC}
 \end{figure}
 
-Los modelos que presentan mayor métrica \texttt{AUC} son el Random Forest y el K-nn, son aquellos con mayor área bajo la curva ROC y los que tienen una mayor pendiente en los valores cercanos al cero. Esto implica que estos clasificadores son capaces de incrementar el número de verdaderos positivos a un ritmo mayor que el número de falsos positivos. Si usásemos esta métrica para sacar conclusiones, éstos serían los mejores modelos, mientras que el árbol de decisión y MLP son los modelos que peor comportamiento muestran, excluyendo al ZeroR. A pesar de esto, no hay excesivas diferencias entro los modelos considerados, a excepción del ZeroR.
+Los modelos que presentan mayor métrica \texttt{AUC} son el Random Forest y el SVM, que son aquellos con mayor área bajo la curva ROC y los que tienen una mayor pendiente en los valores cercanos al cero. Esto implica que estos clasificadores son capaces de incrementar el número de verdaderos positivos a un ritmo mayor que el número de falsos positivos. Si usásemos esta métrica para sacar conclusiones, éstos serían los mejores modelos, mientras que el  MLP es el modelo que peor comportamiento muestra, excluyendo al ZeroR. A pesar de esto, no hay excesivas diferencias entre los modelos considerados, a excepción del ZeroR.
 
 \subsection{Análisis de los atributos}
 
