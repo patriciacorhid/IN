@@ -279,15 +279,179 @@ En el diagrama de cajas volvemos a apreciar la poca variabilidad de este atribut
 
 \section{Segmentación}
 
+\subsection{Introducción}
 
+El problema que abordaremos en esta sección es agrupar accidentes obtenidos de los datos publicados por la Dirección General de Tráfico  en conjuntos de accidentes con características similares. Para ello utilizaremos técnicas de clustering estudiadas en la asignatura, concretamente \texttt{K-means} y \texttt{DBSCAN}. Ambos métodos son métodos de particionamiento.
 
-\section{Bibliografía}
+El algortimo \texttt{K-means} necesita como parámetro el número de clústers deseado y va clasificando las diferentes instancias en el clúster cuyo centroide sea el más cercano a ésta. Es un método iterativo que recalcula el centroide en cada iteración y repite el proceso de clasificación de las instancias. Termina cuando en una iteración ninguna instancia cambia de clúster. El algoritmo siempre converge.
+
+El algoritmo \texttt{DBSCAN} depende de los parámetros \textit{epsilon} y \textit{min\_samples}. El primero indica la distancia máxima a la que se considera que dos puntos son directamente alcanzables. Para que un punto sea un punto núcleo necesita que haya al menos \textit{min\_samples} a distancia menor que \textit{epsilon} de él. A partir de ahí, un punto será alcanzable si existe una secuencia de puntos $p_1, \ldots, p_n$ tales que $p_{i+1}$ es directamente alcanzable desde $p_i$. Cada punto núcleo forma un clúster formado por todos aquellos puntos alcanzables desde él. A los puntos que no pertenecen a ningún clúster se les asigna el clister $-1$.
+
+Los atributos en los que nos basamos para hacer la segmentación son:
 
 \begin{itemize}
+\item \texttt{TOT\_VICTIMAS}: Total de víctimas
+\item \texttt{TOT\_MUERTOS}: Total de muertos
+\item \texttt{TOT\_HERIDOS\_GRAVES}: Total de heridos graves.
+\item \texttt{TOT\_HERIDOS\_LEVES}: Total de heridos leves.
+\item \texttt{TOT\_VEHICULOS\_IMPLICADOS}: Total de vehículos involucrados en el accidente.
+\end{itemize}
 
+Las métricas que usaremos para la estimar la bondad del ajuste son el coeficiente Silhouette y el índice Calinski-Harabasz.
+
+El coeficiente Silhouette mide como de similares son los elementos del mismo clúster comparado con los elementos de otro clúster. Este coeficiente es la media de los $s(i)$, con
+
+$$s(i) = \frac{b(i)-a(i)}{\max\{a(i), b(i)\}}$$
+
+donde $b(i)$ es la mínima distancia del elemento $i$ a otro clúster y $a(i)$ es la distancia media del elemento al resto de instancias de su clúster. Cuanto mayor sea este coeficiente, mejor es el rendimiento del modelo.
+
+El índice Calinski-Harabasz mide la razón entre la dispersión interclústers y la dispersión intraclústers. El agrupamiento será mejor cuanto mayor sea este índice.
+
+Para la elección de hiperparámetros, elegiremos aquellos que maximicen el índice Calinski-Harabasz, que utiliza todas las muestras para su cálculo y dado que usamos los mismos datos en todas las iteraciones, que su valor no esté normalizado no afecta en la interpretación del resultado.
+
+Antes de realizar el análisis ejecutando los algoritmos de clusterig normalizamos los datos con la función \texttt{MinMaxScaler}.
+
+\newpage
+\subsection{Caso de estudio 1: Choque frontal en carreteras convencionales}
+
+Estudiaremos las propiedades de los choques frontal en carreteras convencionales que, según el libro \href{https://www.todostuslibros.com/libros/manual-del-alumno-permiso-b-facilauto_978-84-09-08551-4}{Manual del alumno. Permiso B} es el caso de accidente con más víctimas mortales.
+
+\subsubsection{K-means}
+
+El algoritmo \texttt{K-means} tiene como parámetro el número de clúster a considerar. Para elegir el mejor valor de éste, ejecuté el algoritmo con un número de clústers comprendido entre $2$ y $14$. Los resultados de las métricas son:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Nº de clústers}}& \textbf{Silhouette} & \textbf{Calinski-Harabasz}\\ \hline
+  2  & 0.4755151052183165  & 637.8831140088855  \\ \hline
+  3  & 0.46599969633063965 & 597.9798532808658  \\ \hline
+  4  & 0.48348908673333896 & 634.4016355078425  \\ \hline
+  5  & 0.531569055229591   & 683.2263367508311  \\ \hline
+  6  & 0.5404576589330072  & 646.8004817570682  \\ \hline
+  7  & 0.5519986909803548  & 630.8036708742871  \\ \hline
+  8  & 0.5786471085948179  & 634.4445453990445  \\ \hline
+  9  & 0.5903779353773022  & 628.3756258948337  \\ \hline
+ 10  & 0.6461326222918197  & 659.4342926638305  \\ \hline
+ 11  & 0.6893747693555886  & 653.852874658656   \\ \hline
+ 12  & 0.7336714808160643  & 659.3965542394021  \\ \hline
+ 13  & 0.744841516853055   & 665.0690582901761  \\ \hline
+ 14  & 0.749410469848095   & 663.5502144820157  \\ \hline
+\end{tabular}
+\end{center}
+
+Para facilitar la comprensión de la tabla, visualizamos la información que contiene en las siguientes gráficas, que se realizan utilizando la función \texttt{grafica}, cuyo código es:
+
+\begin{lstlisting}
+def grafica(data, label, title, xlab, ylab):
+    plt.plot(data,label, c='b')
+    plt.title(title)
+    plt.xlabel(xlab)
+    plt.ylabel(ylab)
+
+    plt.show()
+  \end{lstlisting}
+
+Obtenemos el siguiente resultado:
+
+\begin{figure}[H]
+  \centering
+  \caption{Gráficas con el valor de las métricas en función del número de clústers}
+  \includegraphics[width=87mm]{imagenes/c1_kmeans_sil}
+  \includegraphics[width=87mm]{imagenes/c1_kmeans_cal}
+\end{figure}
+
+Vemos que el coeficiente Calinski-Harabasz alcanza un máximo cuando se consideran 5 clústers, por lo que elegiremos este valor para dicho hiperparámetro.
+
+El resultado de la segmentación es la división del conjunto de accidentes considerados en 5 conjuntos con las siguiente distribución:
+
+\begin{figure}[H]
+  \centering
+  \caption{Clústers}
+  \includegraphics[width=100mm]{imagenes/c1_kmeans_clusters}
+\end{figure}
+
+Vemos que el $51.24\%$ de los accidentes pertenecen al clúster $0$. El siguiente clúster más grande, el $2$, posee el $18.65\%$ de éstos y el $4$ posee el $14.51\%$. Los clústers con menos elementos son el $1$ y el $3$ con el $8.08\%$ y el $7.53\%$, respectivamente.
+
+Los valores de las métricas para este modelo son:
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Silhouette}} & \textbf{Calinski-Harabasz}\\ \hline
+ 0.531569055229591   & 683.2263367508311  \\ \hline
+\end{tabular}
+\end{center}
+
+Los centroides de los diferentes clusters son:
+
+\begin{figure}[H]
+  \centering
+  \caption{Centroides}
+  \includegraphics[width=130mm]{imagenes/c1_kmeans_centroides}
+\end{figure}
+
+El clúster $0$, que es aquel con más instancias, tiene como centro un accidente con $2.059$ vehículos implicados, del que $1.387$ personas han sido heridos leves, pero sin muertos ni heridos graves. Es el clúster cuyo centro tiene un menor número de víctimas.
+
+El clúster $1$ tiene como centro un accidente con $3,573$ víctimas, en el que $2,342$ son heridos graves, $1.043$ son heridos leves y $0.188$ son heridos leves. Hubo $2.162$ vehículos implicados. Es el clúster con mayor número de heridos graves de media.
+
+El clúster $2$ tiene como centro un accidente con $3.981$ víctimas, la mayoría heridos leves. Tiene de media más heridos leves que el resto, pero es el sugundo con menos heridos graves. Como en el resto de clústers, los vehículos involucrados están alrededor de $2$.
+
+El clúster $3$ tiene como centro un accidente con $2.3850$ víctimas. Tiene de media más muertos que el resto, $1.358$ muertos. También tiene $0.477$ heridos graves y 0.55 heridos leves.
+
+El cúster 4 tiene como centro un accidente con $1.648$ víctimas, pero ningún muerto.
+
+Las diferencias entre los distintos clústers pueden visualizarse con \texttt{pairplot}:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=171mm]{imagenes/c1_kmeans_pairplot}
+\end{figure}
+
+Podemos corroborar lo que vimos con los centroides, que todos los clústers suelen tener entorno a 2 vehículos implicados. En el atributo \texttt{TOT\_HERIDOS\_GRAVES} nos ayuda a discernir el clúster 1 de los clusters 2 y 3. El atributo \texttt{TOT\_HERIDOS\_LEVES} diferencia los clústers 4, 0 y 2. Para ver estas diferencias de manera más detallada podemos usar \texttt{boxplot}:
+
+\begin{figure}[H]
+  \centering
+  \caption{Diagramas de cajas}
+  \includegraphics[width=87mm]{imagenes/c1_kmeans_bp_vic}
+  \includegraphics[width=87mm]{imagenes/c1_kmeans_bp_muertos}
+    \includegraphics[width=87mm]{imagenes/c1_kmeans_bp_hg}
+  \includegraphics[width=87mm]{imagenes/c1_kmeans_bp_hl}
+  \includegraphics[width=87mm]{imagenes/c1_kmeans_bp_vi}
+\end{figure}
+
+\newpage
+En la siguiente tabla mostramos el rango de valores más representativo de cada cluster:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Nº del clúster}} & \textbf{Víctimas} & \textbf{Muertos} & \textbf{Heridos graves} & \textbf{Heridos leves} & \textbf{Vehículos implicados}\\ \hline
+  0  & 0-2 & 0   & 0   & 1-2 & 2 \\ \hline
+  1  & 2-7 & 0   & 2   & 0-5 & 2 \\ \hline
+  2  & 3-8 & 0   & 0   & 3-5 & 2 \\ \hline
+  3  & 0-4 & 1-3 & 0-2 & 1-2 & 2 \\ \hline
+  4  & 0-3 & 0   & 1   & 1-2 & 2 \\ \hline
+\end{tabular}
+\end{center}
+
+\newpage
+\section{Contenido adicional}
+\section{Bibliografía}
+
+\textbf{Visualización}
+\begin{itemize}
 \item \href{https://es.wikipedia.org/wiki/BI-RADS}{https://es.wikipedia.org/wiki/BI-RADS}
 \item Datos: \href{https://bigml.com/user/TotyB/gallery/dataset/509a98c6035d0706dd0001dd}{https://bigml.com/user/TotyB/gallery/dataset/509a98c6035d0706dd0001dd}
+\end{itemize}
+\textbf{Segmentación}
+\begin{itemize}
+\item Transparencias Tema 5: Clustering
 \item \href{https://www.todostuslibros.com/libros/manual-del-alumno-permiso-b-facilauto_978-84-09-08551-4}{Manual del alumno. Permiso B}
+\item \href{https://github.com/SofiaAlmeida/IN/blob/master/P2/memoria.pdf}{https://github.com/SofiaAlmeida/IN/blob/master/P2/memoria.pdf}
+\item \href{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html\#sklearn.cluster.KMeans.fit}{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html\#sklearn.cluster.KMeans.fit}
+\item \href{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html\#sklearn.cluster.DBSCAN}{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html\#sklearn.cluster.DBSCAN}
+\item \href{https://es.wikipedia.org/wiki/DBSCAN}{https://es.wikipedia.org/wiki/DBSCAN}
 \end{itemize}
 
 \end{document}
