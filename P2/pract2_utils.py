@@ -73,3 +73,22 @@ def visualize_centroids(centers, data, columns):
     hm.set_ylim(bottom + 0.5, top - 0.5)
     hm.figure.tight_layout()
     return hm
+
+def visualize_centroids_dbscan(centers, data, columns):
+    """
+    Visualiza los centroides.
+
+    Parametros:
+
+    - centers: centroides.
+    - data: listado de atributos.
+    - columns: nombres de los atributos.
+    """
+    df_centers = pd.DataFrame(centers,columns=columns)
+    hm = seaborn.heatmap(df_centers, cmap="YlGnBu", annot=df_centers, fmt='.3f')
+    hm.set_xticklabels(hm.get_xticklabels(), rotation = 45, fontsize = 8)
+    # estas tres lineas las he añadido para evitar que se corten la linea superior e inferior del heatmap
+    bottom, top = hm.get_ylim()
+    hm.set_ylim(bottom + 0.5, top - 0.5)
+    hm.figure.tight_layout()
+    return hm
