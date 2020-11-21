@@ -318,7 +318,7 @@ Estudiaremos las propiedades de los choques frontal en carreteras convencionales
 
 \subsubsection{K-means}
 
-El algoritmo \texttt{K-means} tiene como parámetro el número de clúster a considerar. Para elegir el mejor valor de éste, ejecuté el algoritmo con un número de clústers comprendido entre $2$ y $14$. Los resultados de las métricas son:
+El algoritmo \texttt{K-means} tiene como parámetro el número de clústers a considerar. Para elegir el mejor valor de éste, ejecuté el algoritmo con un número de clústers comprendido entre $2$ y $14$. Los resultados de las métricas son:
 
 \begin{center}
 \begin{tabular}{|c|c|c|}
@@ -449,7 +449,7 @@ El cúster $4$ se compone de accidentes con un herido grave y entre uno y dos le
 
 \subsubsection{DBSCAN}
 
-El algoritmo DBSCAN tiene como parámetro la distancia a la que consideramos que dos puntos son directamente alcanzables, \textit{epsilon}. Consideré que un clúster tenía que estar constituido por 5 puntos mínimo. Para elegir el mejor valor de \textit{epsilon}, ejecuté el algoritmo con diez valores de \textit{epsilon} equidistantes entre 0.02 y 0.2, ambos incluidos. Los resultados de las métricas son:
+El algoritmo DBSCAN tiene como parámetro la distancia a la que consideramos que dos puntos son directamente alcanzables, \textit{epsilon}. Consideré que un clúster tenía que estar constituido por 5 puntos mínimo. Para elegir el mejor valor de \textit{epsilon}, ejecuté el algoritmo con diez valores de \textit{epsilon} equidistantes entre 0.02 y 0.2, ambos incluidos. Elegí valores inferiore a 0.2 porque con valores mayores de \textit{epsilon} el algoritmo sólo creaba un clúster diferente al clúster $-1$.  Los resultados de las métricas son:
 
 \begin{center}
 \begin{tabular}{|c|c|c|}
@@ -473,8 +473,8 @@ Para facilitar la comprensión de la tabla, visualizamos la información que con
 \begin{figure}[H]
   \centering
   \caption{Gráficas con el valor de las métricas en función del número de clústers}
-  \includegraphics[width=79mm]{imagenes/c1_dbscan_sil}
-  \includegraphics[width=79mm]{imagenes/c1_dbscan_cal}
+  \includegraphics[width=73mm]{imagenes/c1_dbscan_sil}
+  \includegraphics[width=73mm]{imagenes/c1_dbscan_cal}
 \end{figure}
 
 Elegimos el valor de \textit{epsilon}$ = 0.08$, ya que ambas medidas alcanzan un máximo con este valor. Los clúster formados quedan así:
@@ -621,7 +621,81 @@ Vemos que el algoritmo K-Means obtiene un valor de la métrica Calinski-Harabasz
 
 En la mayoría de accidentes hay dos vehículos implicados, por lo que el atributo \texttt{TOT\_VEHICULOS\_IMPLICADOS} no aporta mucha información. El atributo \texttt{TOT\_VICTIMAS} tampoco es muy relevante, puesto que puede calcularse a partir de \texttt{TOT\_MUERTOS}, \texttt{TOT\_HERIDOS\_GRAVES} y \texttt{TOT\_HERIDOS\_LEVES}. El atributo \texttt{TOT\_MUERTOS} sirve para diferenciar uno o tres clúster en cada uno de los modelos considerados del resto, y el resto de clústers se diferencian entre sí por los atributos \texttt{TOT\_HERIDOS\_GRAVES} y \texttt{TOT\_HERIDOS\_LEVES}, por lo que estos son los atributos dos más relevantes para el agrupamiento.
 
-\subsection{Caso 2: Fin de semana}
+\newpage
+\subsection{Caso 2: Fin de semana con densidad de circulación densa}
+
+Nos preguntamos si durante los fines de semana hay un mayor número de víctimas que el resto de la semana, por lo que visualizamos el diagrama de cajas del atributo \texttt{TOT\_VICTIMAS} respecto al día de la semana.
+
+\begin{figure}[H]
+  \centering
+  \caption{Diagramas de cajas}
+  \includegraphics[width=87mm]{imagenes/c2_selec_atr}
+\end{figure}
+
+Obtenemos que efectivamente la variabilidad de este atributo es mayor en el fin de semana que en el resto de días, por lo que decidimos elegir como nuestro segundo caso los accidentes ocurridos los viernes, sábados o domingos.  Además, elegí aquellos accidentes en los que la densidad de circulación es ``DENSA'', que representarán los días en los que mucha gente se desplace para disfrutar del fin de semana, como festividades.
+
+\subsubsection{K-means}
+
+Para elegir el mejor valor para el número de clústers que considera el algoritmo K-means, ejecuté el algoritmo con un número de clústers comprendido entre 2 y 14. Los resultados de las métricas son:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Nº de clústers}}& \textbf{Silhouette} & \textbf{Calinski-Harabasz}\\ \hline
+  2  & 0.5370884902834917 & 680.6474578600636  \\ \hline
+  3  & 0.5022253639905714 & 691.2087946486065  \\ \hline
+  4  & 0.5253455054070136 & 731.3590806547992  \\ \hline
+  5  & 0.494182230718928  & 794.2278720981091  \\ \hline
+  6  & 0.5384826599151725 & 904.0949725499044  \\ \hline
+  7  & 0.601310808513732  & 925.9700253681594  \\ \hline
+  8  & 0.622859268196415  & 942.1012174830314  \\ \hline
+  9  & 0.7013609213343277 & 963.5793862878563  \\ \hline
+ 10  & 0.7221502954295131 & 954.6141788919715  \\ \hline
+ 11  & 0.7266476702162132 & 964.5578901852715  \\ \hline
+ 12  & 0.7385815169799497 & 996.4201247190041  \\ \hline
+ 13  & 0.7445925945766767 & 1032.2367917798642 \\ \hline
+ 14  & 0.7557938837992468 & 1058.1110463372995 \\ \hline
+\end{tabular}
+\end{center}
+
+Para facilitar la comprensión de la tabla, visualizamos la información que contiene en las siguientes gráficas:
+
+\begin{figure}[H]
+  \centering
+  \caption{Gráficas con el valor de las métricas en función del número de clústers}
+  \includegraphics[width=87mm]{imagenes/c2_kmeans_sil}
+  \includegraphics[width=87mm]{imagenes/c2_kmeans_cal}
+\end{figure}
+
+Vemos que ambas métricas aumentan cuanto mayor es el número de clústers considerados, pero un número de clústers muy alto puede tener con resultado que el modelo esté más sobreajustado. Podemos comprobar esto en las siguientes gráficas:
+
+\begin{figure}[H]
+  \centering
+  \caption{Clústers}
+  \includegraphics[width=57mm]{imagenes/c2_kmeans_clusters_5}
+  \includegraphics[width=57mm]{imagenes/c2_kmeans_clusters}
+  \includegraphics[width=57mm]{imagenes/c2_kmeans_clusters_13}
+\end{figure}
+
+Con 13 clústers hay 6 clústers con menos de 50 accidentes, con 9 clúster solo hay 2 con menos de 50 accidentes y con 5 clústers solo uno. Con ánimo de tener una métrica Calinski-Harabasz alta pero sin tener clústers con pocas instancias, que pueden ser causa del sobreajuste del modelo, utilizaremos nueve clústers.
+
+El resultado de la segmentación es la división del conjunto de accidentes considerados en 9 conjuntos con las siguiente distribución:
+
+\begin{figure}[H]
+  \centering
+  \caption{Clústers}
+  \includegraphics[width=81mm]{imagenes/c2_kmeans_clusters}
+\end{figure}
+
+El clúster con más accidentes es el 2, con 415 accidentes, seguido del clúster 6, que posee 240. Los clúster con menos accidentes son el 3 con 17 y el 4 con 48.
+
+
+
+
+
+
+
+
 
 \newpage
 \begin{center}
