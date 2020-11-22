@@ -689,13 +689,104 @@ El resultado de la segmentación es la división del conjunto de accidentes cons
 
 El clúster con más accidentes es el 2, con 415 accidentes, seguido del clúster 6, que posee 240. Los clúster con menos accidentes son el 3 con 17 y el 4 con 48.
 
+Los valores de las métricas para este modelo son:
 
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Silhouette}} & \textbf{Calinski-Harabasz}\\ \hline
+  0.7013609213343277 & 963.5793862878563 \\ \hline
+\end{tabular}
+\end{center}
 
+Los centroides de los diferentes clusters son:
 
+\begin{figure}[H]
+  \centering
+  \caption{Centroides}
+  \includegraphics[width=130mm]{imagenes/c2_kmeans_centroides}
+\end{figure}
 
+El clúster 0 tiene como centro un accidente con 3.244 vehículos implicados, en el que 0.993 personas han sido heridos leves y 0.007 heridos graves, pero sin muertos.
 
+El clúster 1 tiene como centro un accidente con 3.312 víctimas, 3.262 heridos leves y 0.050 heridos graves, sin muertos. Se han visto involucrados 2.404 vehículos.
 
+El clúster 2 tiene como centro un accidente con 1 víctima, herida levemente, y dos vehículos implicados.
 
+El clúster 3 tiene como centro un accidente con 1.941 vehículos implicados, en el que 1.294 personas han sido heridos leves, 0.588 heridos leves y un muerto.
+
+El clúster 4 tiene como centro un accidente con 5.771 víctimas, 5.604 heridos leves y 0.167 heridos graves, sin muertos. Se han visto involucrados 3.125 vehículos.
+
+El clúster 5 tiene como centro un accidente con 1.372 víctimas, 0.271 heridos leves y 1.101 heridos graves, sin muertos. Se han visto involucrados 1.636 vehículos.
+
+El clúster 6 tiene como centro un accidente con 2 víctimas, heridas levemente, sin heridos graves ni muertos. Se han visto involucrados 2.112 vehículos.
+
+El clúster 7 tiene como centro un accidente con 4.773 vehículos implicados, en el que 2.32 personas han sido heridos leves, 0.013 heridos leves y sin muertos.
+
+El clúster 8 tiene como centro un accidente con una víctimas, herida levemente, sin heridos graves ni muertos y un sólo vehículo implicado.
+
+Utilizamos la función \texttt{pairplot} para ver las diferencias entre los distintos clústers:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=180mm]{imagenes/c2_kmeans_pairplot}
+\end{figure}
+
+Los atributos \texttt{TOT\_VICTIMAS} y \texttt{TOT\_VEHICULOS\_IMPLICADOS} son aquellos que más ayudan a discernir los diferentes clústers. El atributo \texttt{TOT\_HERIDOS\_LEVES} diferencia los clústers 5, 0 y 7 y 1, y el atributo \texttt{TOT\_HERIDOS\_GRAVES} distingue el clúster 5 de los demás. El atributo \texttt{TOT\_MUERTOS} no aporta tanta información, ya que su media vale 0 en la mayoría de los clústers.
+
+\newpage
+Visualizamos a continuación los diagramas de cajas de los diferentes atributos en cada clúster.
+
+\begin{figure}[H]
+  \centering
+  \caption{Diagramas de cajas}
+  \includegraphics[width=87mm]{imagenes/c2_kmeans_vic}
+  \includegraphics[width=87mm]{imagenes/c2_kmeans_muertos}
+    \includegraphics[width=87mm]{imagenes/c2_kmeans_hg}
+  \includegraphics[width=87mm]{imagenes/c2_kmeans_hl}
+  \includegraphics[width=87mm]{imagenes/c2_kmeans_vi}
+\end{figure}
+
+\newpage
+En la siguiente tabla mostramos el rango de valores más representativo de cada cluster:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Nº del clúster}} & \textbf{Víctimas} & \textbf{Muertos} & \textbf{Heridos graves} & \textbf{Heridos leves} & \textbf{Vehículos implicados}\\ \hline
+  0  & 1   & 0 & 0   & 1   & 3   \\ \hline
+  1  & 3-4 & 0 & 0   & 3-4 & 1-4 \\ \hline
+  2  & 1   & 0 & 0   & 1   & 2   \\ \hline
+  3  & 1-6 & 1 & 0-2 & 0-4 & 1-3 \\ \hline
+  4  & 5-7 & 0 & 0   & 4-7 & 1-6 \\ \hline
+  5  & 1-3 & 0 & 1   & 0   & 1-3 \\ \hline
+  6  & 2   & 0 & 0   & 2   & 2   \\ \hline
+  7  & 1-4 & 0 & 0   & 1-4 & 4-6 \\ \hline
+  8  & 1   & 0 & 0   & 1   & 1   \\ \hline
+\end{tabular}
+\end{center}
+
+El clúster $0$ está compuesto por accidentes con 3 vehículos implicados sin muertos ni heridos graves y un herido leve.
+
+El clúster $1$ está formado por accidentes con entre tres y cuatro heridos leves, sin muertos o heridos leves. Se vieron implicados entre uno y cuatro vehículos.
+
+El clúster $2$ está compuesto por accidentes sin muertos ni heridos graves y un herido leve. Se diferencia del clúster 0 por tener 2 vehículos implicados en lugar de tres. Es aquel con más muestras.
+
+El clúster $3$ es el único cluste en cuyos accidentes hay muertos. Hay un muerto concretamente. También hay entre cero y dos heridos graves y entre cero y cuatro leves. Se vieron involucrados entre uno y tres vehículos. Es el clúster con menos muestras.
+
+El cúster $4$ se compone de accidentes con entre cuatro y siete víctimas, todas ellas heridos leves. Puede haber entre uno y seis vehículos implicados.
+
+El cúster $5$ se compone de accidentes con entre uno y tres vehículos implicados y entre una y tres víctimas.
+
+El cúster $6$ se compone de accidentes con dos víctimas, todos ellos heridos leves, y dos vehículos implicados. Es el segundo clúster con mayor número de muestras.
+
+El cúster $7$ se compone de accidentes con entre una y cuatro víctimas, todas ellas heridos leves. Puede haber entre cuatro y seis vehículos implicados.
+
+El clúster $8$ está compuesto por accidentes sin muertos ni heridos graves y un herido leve. Se diferencia del clúster 0 y 2 por tener un solo vehículo implicado en lugar de dos o tres. Tiene menos muestras que el clúster dos, pero más que el cero.
+
+\subsubsection{DBSCAN}
+
+Al igual que en el caso 1, estimamos el valor del parámetro \textit{epsilon}, la distancia a la que consideramos que dos puntos son directamente alcanzables. El valor de \textit{min\_samples} considerado sigue siendo cinco. Ejecuté el algoritmo con diez valores de \textit{epsilon} equidistantes entre 0.02 y 0.2, ambos incluidos. Los resultados de las métricas son:
 
 \newpage
 \begin{center}
