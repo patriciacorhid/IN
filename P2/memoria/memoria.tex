@@ -454,7 +454,7 @@ El algoritmo DBSCAN tiene como parámetro la distancia a la que consideramos que
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{\textbf{Nº de clústers}}& \textbf{Silhouette} & \textbf{Calinski-Harabasz}\\ \hline
+\multicolumn{1}{|c|}{\textbf{Epsilon}}& \textbf{Silhouette} & \textbf{Calinski-Harabasz}\\ \hline
   0.02  & 0.8625282937916661  & 112.37177969144075  \\ \hline
   0.04  & 0.8625282937916661  & 112.37177969144075  \\ \hline
   0.06  & 0.8625282937916661  & 112.37177969144075  \\ \hline
@@ -788,32 +788,136 @@ El clúster $8$ está compuesto por accidentes sin muertos ni heridos graves y u
 
 Al igual que en el caso 1, estimamos el valor del parámetro \textit{epsilon}, la distancia a la que consideramos que dos puntos son directamente alcanzables. El valor de \textit{min\_samples} considerado sigue siendo cinco. Ejecuté el algoritmo con diez valores de \textit{epsilon} equidistantes entre 0.02 y 0.2, ambos incluidos. Los resultados de las métricas son:
 
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Epsilon}}& \textbf{Silhouette} & \textbf{Calinski-Harabasz}\\ \hline
+  0.02  & 0.8934379643459736  & 124.0538840507491  \\ \hline
+  0.04  & 0.8934379643459736  & 124.0538840507491  \\ \hline
+  0.06  & 0.8934379643459736  & 124.0538840507491  \\ \hline
+  0.08  & 0.8934379643459736  & 124.0538840507491  \\ \hline
+  0.1   & 0.8934379643459736  & 124.0538840507491  \\ \hline
+  0.12  & 0.8934379643459736  & 124.0538840507491  \\ \hline
+  0.14  & 0.46816397525012415 & 227.24590316566974  \\ \hline
+  0.16  & 0.41172169744646275 & 151.0794991884267  \\ \hline
+  0.18  & 0.4117216974464629  & 151.0794991884267  \\ \hline
+  0.2   & 0.41178272792344994 & 151.0794991884267  \\ \hline
+\end{tabular}
+\end{center}
+
+Para facilitar la comprensión de la tabla, visualizamos la información que contiene en las siguientes gráficas:
+
+\begin{figure}[H]
+  \centering
+  \caption{Gráficas con el valor de las métricas en función del número de clústers}
+  \includegraphics[width=73mm]{imagenes/c2_dbscan_sil}
+  \includegraphics[width=73mm]{imagenes/c2_dbscan_cal}
+\end{figure}
+
+Seleccioné el valor de \textit{epsilon} = 0.14 porque es en el que se maximiza la métrica Calinski-Harabasz. La métrica Silhouette no utiliza todas las muestras para su cálculo y depende entonces de las muestras seleccionadas, por lo que decidí anteponer la maximización de la métrica Calinski-Harabasz a la de ésta. Los clústers formados quedan así:
+
+\begin{figure}[H]
+  \centering
+  \caption{Gráficas con el valor de las métricas en función del número de clústers}
+  \includegraphics[width=87mm]{imagenes/c2_dbscan_clusters}
+\end{figure}
+
+Vemos que se han formado 9 cluster, siendo el clúster con identificador $-1$ aquel compuesto por todos los datos que no encajaban en ningúno de los otros 8. Hay 61 datos pertenecientes a este clúster, es decir, el $4.41\%$ de los datos no se clasifica correctamente. El clúster con más instancias es el 0, que cuenta con 740, seguido del clúster 3, con 273. Los clústers que superan las 100 instancias son el clúster 0, el 3 y el 5. El clúster 2 tiene 98, y el resto menos de 65. 
+
+Los valores de las métricas para este modelo son:
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Silhouette}} & \textbf{Calinski-Harabasz}\\ \hline
+ 0.46816397525012415 & 227.24590316566974  \\ \hline
+\end{tabular}
+\end{center}
+
+Los centroides de los diferentes clusters son:
+
+\begin{figure}[H]
+  \centering
+  \caption{Centroides}
+  \includegraphics[width=130mm]{imagenes/c2_dbscan_centroides}
+\end{figure}
+
+El clúster 0 tiene como centro un accidente con 2.012 vehículos implicados, en el que una personas han sido herida levemente, pero sin muertos ni heridos graves.
+
+El clúster 1 tiene como centro un accidente con dos víctimas, una herida leve y otra herida grave, sin muertos. Se han visto involucrados 1.947 vehículos.
+
+El clúster 2 tiene como centro un accidente con 1 víctima, herida gravemente, y 1.596 vehículos implicados.
+
+El clúster 3 tiene como centro un accidente con dos víctimas, ambas heridos leves. Hubo 2.370 vehículos implicados.
+
+El clúster 4 tiene como centro un accidente con 6 víctimas, todas ellas heridos leves, y 2.824 vehículos implicados.
+
+El clúster 5 tiene como centro un accidente con 3 víctimas, todas ellas heridos leves, y 2.726 vehículos implicados.
+
+El clúster 6 tiene como centro un accidente con 2.886 vehículos implicados en que que 4 personas resultaron heridas levemente.
+
+El clúster 7 tiene como centro un accidente con 5 víctimas, las cinco heridas leves. Hubo tres vehículos implicados.
+
+Como con K-Mean, utilizé \texttt{pairplot} con la esperanza de ver diferencias entre los distintos clústers, pero los resultados no son los esperados y sólo podemos sacar información a partir del atributo \texttt{TOT\_VEHICULOS\_IMPLICADOS}, que, como veremos a continuación en el diagrama de cajas, es el único atributo con variabilidad en los clústers.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=180mm]{imagenes/c2_dbscan_pairplot}
+\end{figure}
+
+Representamos pues diagramas de cajas para poder ver mejor la variabilidad de los diferentes atributos en cada clúster y diferenciarlos así.
+
+\begin{figure}[H]
+  \centering
+  \caption{Diagramas de cajas}
+  \includegraphics[width=87mm]{imagenes/c2_dbscan_vic}
+  \includegraphics[width=87mm]{imagenes/c2_dbscan_muertos}
+    \includegraphics[width=87mm]{imagenes/c2_dbscan_hg}
+  \includegraphics[width=87mm]{imagenes/c2_dbscan_hl}
+  \includegraphics[width=87mm]{imagenes/c2_dbscan_vi}
+\end{figure}
+
+El clúster $-1$ es aquel con más variabilidad en todos los atributos por estar compuesto por todos aquellos accidentes que no encajaban en el resto de clústers. El resto de clústers tienen poca variabilidad en la mayoría de los atributos, a excepción del \texttt{TOT\_VEHICULOS\_IMPLICADOS}. El atributo \texttt{TOT\_MUERTOS} no aporta información en el agrupamiento, ya que ninguno de los clústers formados contiene contiene accidentes con muertos, todos estos accidentes son colocados en el clúster $-1$, junto con el resto de accidentes que no es capaz de clasificar correctamente.
+
 \newpage
+En la siguiente tabla mostramos el rango de valores más representativo de cada cluster:
+
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
 \multicolumn{1}{|c|}{\textbf{Nº del clúster}} & \textbf{Víctimas} & \textbf{Muertos} & \textbf{Heridos graves} & \textbf{Heridos leves} & \textbf{Vehículos implicados}\\ \hline
-  0  &  &  &  &  &  \\ \hline
-  1  &  &  &  &  &  \\ \hline
-  2  &  &  &  &  &  \\ \hline
-  3  &  &  &  &  &  \\ \hline
-  4  &  &  &  &  &  \\ \hline
-  5  &  &  &  &  &  \\ \hline
-  6  &  &  &  &  &  \\ \hline
-  7  &  &  &  &  &  \\ \hline
-  8  &  &  &  &  &  \\ \hline
-  9  &  &  &  &  &  \\ \hline
- 10  &  &  &  &  &  \\ \hline
- 11  &  &  &  &  &  \\ \hline
- 12  &  &  &  &  &  \\ \hline
- 13  &  &  &  &  &  \\ \hline
- 14  &  &  &  &  &  \\ \hline
- 15  &  &  &  &  &  \\ \hline
- 16  &  &  &  &  &  \\ \hline
+  0  & 1 & 0 & 0 & 1 & 2   \\ \hline
+  1  & 2 & 0 & 1 & 1 & 1-2 \\ \hline
+  2  & 1 & 0 & 1 & 0 & 1-3 \\ \hline
+  3  & 2 & 0 & 0 & 2 & 1-4 \\ \hline
+  4  & 6 & 0 & 0 & 6 & 1-4 \\ \hline
+  5  & 3 & 0 & 0 & 3 & 1-4 \\ \hline
+  6  & 4 & 0 & 0 & 4 & 2-5 \\ \hline
+  7  & 5 & 0 & 0 & 5 & 2-5 \\ \hline
 \end{tabular}
 \end{center}
 
-\newpage
+Como el único atributo con variabilidad es \texttt{TOT\_VEHICULOS\_IMPLICADOS}, lo único que diferencia a cada instancia de un clúster del centro de éste es el número de vehículos involucrados en dicho accidente. Este atributo junto con \texttt{TOT\_HERIDOS\_LEVES} es el que más ayuda a la diferenciacion de los distintos clústers entre sí.
+
+\subsubsection{Comparación de los algoritmos}
+
+Los resultados de los algoritmos considerados son:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+  \multicolumn{1}{|c|}{\textbf{Algoritmo}} & \textbf{Silhouette} & \textbf{Calinski-Harabasz} &  \textbf{Nº de clústers}\\ \hline
+ Kmeans &  0.7013609213343277  & 963.5793862878563  & 9 \\ \hline
+ DBSCAN &  0.46816397525012415 & 227.24590316566974 & 9 \\ \hline
+\end{tabular}
+\end{center}
+
+Aunque ambos algoritmos crean el mismo número de clústers, el algoritmo K-means tiene un mejor desempeño que el DBSCAN. El K-means consigue clústers cuyos atributos tienen mayor variabilidad, como nos ocurría en el caso 1, y las instancias están divididas en los clústers de manera más homogenea, mientras que con DBSCAN hay mayor diferencia entre el número de instancias en el clúster ``más poblado'', el clúster 0, y en el resto.
+
+\subsubsection{Interpretación de la segmentación}
+
+Con los dos algoritmos considerados los atributos que mejor diferencian los distintos clústers son \texttt{TOT\_VEHICULOS\_IMPLICADOS} y \texttt{TOT\_HERIDOS\_LEVES}. No hay muchos accidentes en este caso con muertos, por lo que el atributo \texttt{TOT\_MUERTOS} no ayuda mucho a diferencias los distintos clústers. De hecho, el algortimo DBSCAN descarta los casos con muertos y los clasifica en el clúster $-1$. Como comentamos anteriormente, el atributo \texttt{TOT\_VICTIMAS} puede deducirse de otros atributos considerados, por lo que podríamos prescindir de él.
+
 \section{Contenido adicional}
 \section{Bibliografía}
 
