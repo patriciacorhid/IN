@@ -855,7 +855,7 @@ Los centroides de los diferentes clusters son:
   \includegraphics[width=130mm]{imagenes/c2_dbscan_centroides}
 \end{figure}
 
-El clúster 0 tiene como centro un accidente con 2.012 vehículos implicados, en el que una personas han sido herida levemente, pero sin muertos ni heridos graves.
+El clúster 0 tiene como centro un accidente con 2.012 vehículos implicados, en el que una persona ha sido herida levemente, pero sin muertos ni heridos graves.
 
 El clúster 1 tiene como centro un accidente con dos víctimas, una herida leve y otra herida grave, sin muertos. Se han visto involucrados 1.947 vehículos.
 
@@ -937,6 +937,117 @@ Con los dos algoritmos considerados los atributos que mejor diferencian los dist
 \newpage
 
 \subsection{Caso 3: Entre semana con densidad de circulación densa}
+
+Añadimos el caso de estudio ``Entre semana con densidad de circulación densa'' para contrastar las características de los accidentes ocurridos bajo estas casuísticas con las de los accidentes del caso 2 y ver las diferencias entre ambos.
+
+\subsubsection{K-means}
+
+Para elegir el mejor valor para el número de clústers que considera el algoritmo K-means, ejecuté el algoritmo con un número de clústers comprendido entre 2 y 14. Los resultados de las métricas son:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Nº de clústers}}& \textbf{Silhouette} & \textbf{Calinski-Harabasz}\\ \hline
+  2  & 0.7901017312445583 & 3323.5016323001405 \\ \hline
+  3  & 0.6905258174794837 & 3525.6287793192128 \\ \hline
+  4  & 0.7165882158328284 & 3618.7158935218295 \\ \hline
+  5  & 0.6997302171607823 & 3795.7422278443883 \\ \hline
+  6  & 0.7081949623134676 & 4701.55145591241   \\ \hline
+  7  & 0.7172739598299913 & 4917.07511849222   \\ \hline
+  8  & 0.7180182979610455 & 5328.48275510556   \\ \hline
+  9  & 0.7093267907202339 & 5365.78866185542   \\ \hline
+ 10  & 0.7196928899841787 & 5423.52585949096   \\ \hline
+ 11  & 0.7234741493620663 & 5615.46939478977   \\ \hline
+ 12  & 0.7232982041710021 & 5867.24077956305   \\ \hline
+ 13  & 0.7192164530386997 & 6188.01750953239   \\ \hline
+ 14  & 0.6974543104655523 & 6464.06705569186   \\ \hline
+\end{tabular}
+\end{center}
+
+Para facilitar la comprensión de la tabla, visualizamos la información que contiene en las siguientes gráficas:
+
+\begin{figure}[H]
+  \centering
+  \caption{Gráficas con el valor de las métricas en función del número de clústers}
+  \includegraphics[width=87mm]{imagenes/c3_kmeans_sil}
+  \includegraphics[width=87mm]{imagenes/c3_kmeans_cal}
+\end{figure}
+
+Vemos que la métrica Calinski-Harabasz aumenta cuanto mayor es el número de clústers considerados, mientras que la Silhouette sube y baja. Como no queremos un número alto de clústers con pocas instancias en la mayoría de ellos, para tomar esta decisión visualizamos las siguientes gráficas con el número de clústers 4, 8 y 12, que son picos en la métrica Silhouette:
+
+\begin{figure}[H]
+  \centering
+  \caption{Distribución con 4, 8 y 12 clústers}
+  \includegraphics[width=57mm]{imagenes/c3_kmeans_clusters_4}
+  \includegraphics[width=57mm]{imagenes/c3_kmeans_clusters_8}
+  \includegraphics[width=57mm]{imagenes/c3_kmeans_clusters_12}
+\end{figure}
+
+\vspace{-3mm}
+
+Con 12 clústers hay 7 clústers con menos de 70 accidentes, con 8 clúster hay tres y con 4 clústers solo uno. A la vista de los resultados, decidí que hacer el análisis con cuatro clústers era más adecuado. Por tanto, la distribución de los clústers es:
+\vspace{-3mm}
+
+\begin{figure}[H]
+  \centering
+  \caption{Clústers}
+  \includegraphics[width=65mm]{imagenes/c3_kmeans_clusters_4}
+\end{figure}
+
+\vspace{-3mm}
+
+El clúster con más instancias es el 0, que cuenta con 1993 es decir, contiene el $76.65\%$ de los accidentes. El clúster 2, con 342 accidentes, es el sugundo mayor. El clúster uno tiene 233 instancias y el 3 tiene sólo 32, que representa el $1.23\%$ de éstas.
+
+Los valores de las métricas para este modelo son:
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Silhouette}} & \textbf{Calinski-Harabasz}\\ \hline
+  0.7165882158328284 & 3618.7158935218295  \\ \hline
+\end{tabular}
+\end{center}
+
+Los centroides de los diferentes clusters son:
+
+\vspace{-3mm}
+
+\begin{figure}[H]
+  \centering
+  \caption{Centroides}
+  \includegraphics[width=106mm]{imagenes/c3_kmeans_centroides}
+\end{figure}
+
+El clúster 0 tiene como centro un accidente con 2.155 vehículos implicados, en el que 1.256 personas han sido heridas levemente, pero sin muertos ni heridos graves. Este clúster es aquel con más instancias de los cuatro.
+
+El clúster 1 tiene como centro un accidente con 0.451 heridos leves, 1.094 heridos graves y 0.004 muertos. Se han visto involucrados 1.936 vehículos. Este clúster es el clúster con mayor número de heridos graves de media.
+
+El clúster 2 tiene como centro un accidente con 3.813 víctimas, 0.003 heridos graves y 3.81 heridos leves, y 3.07 vehículos implicados. Por tanto, este clúster es aquel con más heridos leves de media y más vehículos implicados.
+
+El clúster 3 tiene como centro un accidente con 1.094 víctimas, 1.094 muertos, 0.094 heridos graves y 0.219 heridos leves. Hubo 1.719 vehículos implicados. Este clúster es aquel con menos accidentes, representa el $1.23\%$ de los accidentes, y es el que mayor número de muertos tiene de media.
+
+Vemos que el clúster uno se diferencia del resto por su valor del atributo \texttt{TOT\_HERIDOS\_GRAVES} y el clúster tres por el \texttt{TOT\_MUERTOS}. El clúster dos se caracteriza por el mayor valor de los atributos \texttt{TOT\_HERIDOS\_LEVES} y \\\texttt{TOT\_VEHICULOS\_IMPLICADOS}.
+
+Utilizé \texttt{pairplot} para ver diferencias entre los distintos clústers. Los resultados son:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=170mm]{imagenes/c3_kmeans_pairplot}
+\end{figure}
+
+Vemos las diferencias entre los clústers cero, uno y dos con el atributo \texttt{TOT\_VICTIMAS} y \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_VEHICULOS\_IMPLICADOS}. El atributo \texttt{TOT\_MUERTOS} separa los elementos del clúster cero de los del clúster 3. Podemos ver las diferencias entre el clúster uno, dos y tres por el \texttt{TOT\_HERIDOS\_GRAVES}.
+
+Representamos diagramas de cajas para poder ver mejor la variabilidad de los diferentes atributos en cada clúster y caracterizarlos así.
+
+\begin{figure}[H]
+  \centering
+  \caption{Diagramas de cajas}
+  \includegraphics[width=87mm]{imagenes/c3_kmeans_vic}
+  \includegraphics[width=87mm]{imagenes/c3_kmeans_muertos}
+  \includegraphics[width=87mm]{imagenes/c3_kmeans_hg}
+  \includegraphics[width=87mm]{imagenes/c3_kmeans_hl}
+  \includegraphics[width=87mm]{imagenes/c3_kmeans_vi}
+\end{figure}
 
 
 \newpage
