@@ -1181,7 +1181,7 @@ El clúster 0 se compone principalmente de accidentes con entre uno y cuatro veh
 
 El clúster 1 se compone mayoritariamente de accidentes con una víctima, herida gravemente. De uno a tres vehículos se vieron implicados.
 
-El clúster 2 está formado, salvo outlayers, por accidentes con un muerto, sin heridos leves ni graves, con de uno a tre vehículos involucrados.
+El clúster 2 está formado por accidentes con un muerto, sin heridos leves ni graves, con de uno a tre vehículos involucrados.
 
 El clúster 3 está formado por accidentes con entre uno y cuatro vehículos implicados, con dos heridos graves y entre cero y dos heridos leves.
 
@@ -1208,6 +1208,20 @@ Con los dos algoritmos hay un clúster más grande que el resto, que es aquel si
 
 \newpage
 \subsection{Comparación de los casos de estudio 2 y 3}
+
+Comparamos los accidentes producidos de viernes a domingo (caso 2) con los accidentes producidos de lunes a jueves (caso 3).
+
+Hay 2600 accidentes producidos de lunes a jueves mientras que el otro caso está compuesto por poco más de la mitad de accidentes, un total de 1383 accidentes. Por tanto, se producen más accidentes de lunes a jueves que el resto de días.
+
+Vemos que en el caso dos se han formado más clústers que en el caso tres, por lo que los accidentes ocurridos de viernes a domingo parecen más variados que los ocurridos durante el resto de días.
+
+Respecto a las víctimas de los accidentes, la proporción de accidentes con un muerto en ambos casos es muy parecida, entorno a un $1.22\%$, sin embargo, los accidentes producidos de viernes a domingo a parte del muerto hubo más heridos en dicho accidente, entre cero y dos heridos graves y entre cero y cuatro heridos leves, mientras que en el otro caso la única víctima en el accidente fue el fallecido. En ambos casos hay entre uno y tres vehículos implicados en estos accidentes. Por tanto observamos que los accidentes producidos en fin de semana con muertos tiene un mayor número de víctimas que el resto de días.
+
+También observamos que los accidentes del caso 2 tienen un mayor número de heridos leves que los del caso 3. Si miramos el boxplot del clúster 4 formado con el algoritmo KMeans, este clúster tiene de 5 a 7 víctimas, todas ellas heridos leves. Lo mismo ocurre con el clúster 4 formado con DBSCAN, que tiene seis heridos leves. Sin embargo, en los accidentes ocurridos de lunes a jueves no hay más de 5 heridos leves. Por tanto el total de víctimas en la mayoría de los accidentes del caso dos se mueve entre una y siete, mientras que las del caso tres se mueve entre una y cinco. Vemos que el atributo heridos leves tiene mayor variabilidad entre los clústers del caso 2 que en el caso 3.
+
+Otra de las diferencias entre los casos es el número de coches implicados. En los accidentes producidos de viernes a domingo este atributo tiene una mayor variabilidad, habiendo clústers con hasta seis vehículos implicados, mientras que en el otro caso no hay más de cuatro vehículos implicados en estos accidentes.
+
+En ambos casos el accidente más común es aquel sin muertos ni heridos graves, y de uno a dos heridos leves y dos vehículos implicados. Este accidente, que corresponde al clúster cero del caso tres formado por el algoritmo K-means, se puede equiparar al clúster dos y seis del caso dos formado con el mis mo algoritmo. En el caso tres, estos accidentes forman el $76.65\%$ de la muestra, mientras que en el caso dos forman el $47.36\%$. 
 
 \newpage
 \section{Contenido adicional}
