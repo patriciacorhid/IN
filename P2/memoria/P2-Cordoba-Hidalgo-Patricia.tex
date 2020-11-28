@@ -408,7 +408,7 @@ Las diferencias entre los distintos clústers pueden visualizarse con \texttt{pa
   \includegraphics[width=166mm]{imagenes/c1_kmeans_pairplot}
 \end{figure}
 
-Podemos corroborar lo que vimos con los centroides, que todos los clústers suelen tener entorno a 2 vehículos implicados. En el atributo \texttt{TOT\_HERIDOS\_GRAVES} nos ayuda a discernir el clúster 1 de los clusters 2 y 3. El atributo \texttt{TOT\_HERIDOS\_LEVES} diferencia los clústers 4, 0 y 2. Para ver estas diferencias de manera más detallada podemos usar \texttt{boxplot}:
+Podemos corroborar lo que vimos con los centroides, que todos los clústers suelen tener entorno a 2 vehículos implicados. También observamos que el atributo \texttt{TOT\_VICTIMAS} es directamente proporcional a los atributos \texttt{TOT\_HERIDOS\_GRAVES}, \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_MUERTOS}. En el atributo \texttt{TOT\_HERIDOS\_GRAVES} nos ayuda a discernir el clúster 1 de los clusters 2 y 3, ya que podemos ver que las distribuciones de este atributo en los clústers son distintas. El atributo \texttt{TOT\_HERIDOS\_LEVES} diferencia los clústers 4, 0 y 2. Para ver estas diferencias de manera más detallada podemos usar \texttt{boxplot}:
 
 \begin{figure}[H]
   \centering
@@ -549,11 +549,11 @@ visualize_centroids_dbscan(centroids, np.array(caso1), atributos)
 
 Donde la función \texttt{visualize\_centroids\_dbscan} es análoga a la función \texttt{visualize\_centroids}, pero no aplica \texttt{denorm}, ya que los centroides no se le pasan normalizados.
 
-Como con K-Mean, utilizé \texttt{pairplot} con la esperanza de ver diferencias entre los distintos clústers. Vemos que los dos atributos que más ayudan a diferenciar los distintos clústers son \texttt{TOT\_VICTIMAS} y \texttt{TOT\_HERIDOS\_GRAVES}.
+Como con K-Mean, utilizé \texttt{pairplot} con la esperanza de ver diferencias entre los distintos clústers, pero sólo se aprecian las distribuciones de los atributos \texttt{TOT\_VICTIMAS} y \texttt{TOT\_HERIDOS\_GRAVES} en los clústers cero y dos, los dos clústers con más accidentes. Vemos también que hay accidentes con cinco y seis vehículos implicados y que estos tienen un número de heridos y muertos menor que alguno de los accidentes con sólo dos vehículos.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=160mm]{imagenes/c1_dbscan_pairplot}
+  \includegraphics[width=153mm]{imagenes/c1_dbscan_pairplot}
 \end{figure}
 
 Representamos pues diagramas de cajas para poder ver mejor la variabilidad de los diferentes atributos en cada clúster y diferenciarlos así.
@@ -743,7 +743,7 @@ Utilizamos la función \texttt{pairplot} para ver las diferencias entre los dist
   \includegraphics[width=180mm]{imagenes/c2_kmeans_pairplot}
 \end{figure}
 
-Los atributos \texttt{TOT\_VICTIMAS} y \texttt{TOT\_VEHICULOS\_IMPLICADOS} son aquellos que más ayudan a discernir los diferentes clústers. El atributo \texttt{TOT\_HERIDOS\_LEVES} diferencia los clústers 5, 0 y 7 y 1, y el atributo \texttt{TOT\_HERIDOS\_GRAVES} distingue el clúster 5 de los demás. El atributo \texttt{TOT\_MUERTOS} no aporta tanta información, ya que su media vale 0 en la mayoría de los clústers.
+Los atributos \texttt{TOT\_VICTIMAS} y \texttt{TOT\_VEHICULOS\_IMPLICADOS} son aquellos que más ayudan a discernir los diferentes clústers, ya que vemos que las distribuciones de estos atributos son muy dispares en cada uno de los clústers. Los atributos \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_HERIDOS\_GRAVES} diferencia los clústers 5, 0 y 7 y 1. El atributo \texttt{TOT\_MUERTOS} no aporta tanta información, ya que su media vale 0 en la mayoría de los clústers.
 
 \newpage
 Visualizamos a continuación los diagramas de cajas de los diferentes atributos en cada clúster.
@@ -874,7 +874,7 @@ El clúster 7 tiene como centro un accidente con 5 víctimas, las cinco heridas 
 Vemos que el atributo \texttt{TOT\_MUERTOS} tiene media cero en todos los clústers, y sólo dos de ellos tienen de media el atributo \texttt{TOT\_HERIDOS\_GRAVES} distinto de cero. Los atributos que más varían entre los clústers son \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_VEHICULOS\_IMPLICADOS}.
 
 
-Como con K-Mean, utilizé \texttt{pairplot} con la esperanza de ver diferencias entre los distintos clústers, pero los resultados no son los esperados y sólo podemos sacar información a partir del atributo \texttt{TOT\_VEHICULOS\_IMPLICADOS}, que, como veremos a continuación en el diagrama de cajas, es el único atributo con variabilidad en los clústers.
+Como con K-Mean, utilizé \texttt{pairplot} con la esperanza de ver diferencias entre los distintos clústers, pero los resultados no son los esperados y sólo podemos ver la distribución del atributo \texttt{TOT\_VEHICULOS\_IMPLICADOS} en los diferentes clústers, que, como veremos a continuación en el diagrama de cajas, es el único atributo con variabilidad en los clústers.
 
 \begin{figure}[H]
   \centering
@@ -1035,7 +1035,7 @@ Utilizé \texttt{pairplot} para ver diferencias entre los distintos clústers. L
   \includegraphics[width=170mm]{imagenes/c3_kmeans_pairplot}
 \end{figure}
 
-Vemos las diferencias entre los clústers cero, uno y dos con el atributo \texttt{TOT\_VICTIMAS} y \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_VEHICULOS\_IMPLICADOS}. El atributo \texttt{TOT\_MUERTOS} separa los elementos del clúster cero de los del clúster 3. Podemos ver las diferencias entre el clúster uno, dos y tres por el \texttt{TOT\_HERIDOS\_GRAVES}.
+Vemos las diferentes dirtribuciones los atributos \texttt{TOT\_VICTIMAS}, \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_VEHICULOS\_IMPLICADOS} entre los clústers cero, uno y dos. El atributo \texttt{TOT\_MUERTOS} separa los elementos del clúster uno de los del clúster 3. Podemos ver las diferencias entre el clúster uno, dos y tres por sus distribuciones de \texttt{TOT\_HERIDOS\_GRAVES}.
 
 Representamos diagramas de cajas para poder ver mejor la variabilidad de los diferentes atributos en cada clúster y caracterizarlos así.
 
@@ -1143,11 +1143,11 @@ El clúster dos es el único con un valor medio de \texttt{TOT\_MUERTOS} distint
 
 En el resto de casos no hablamos del clúster $-1$, no le vi sentido comentarlo ya que en él hay datos muy dispersos y no podemos sacar información del conjunto en sí, pero llama la atención la media de \texttt{TOT\_VEHICULOS\_IMPLICADOS}, que es más alta que en el resto de los otros clústers.
 
-Como en el resto de casos, utilizé \texttt{pairplot} con el objetivo de ver diferencias entre los distintos clúster.
+Como en el resto de casos, utilizé \texttt{pairplot} con el objetivo de ver diferencias entre los distintos clúster. Sólo se muestran las dirtribuciones de los atributos \texttt{TOT\_VICTIMAS}, \texttt{TOT\_HERIDOS\_GRAVES} y \texttt{TOT\_VEHICULOS\_IMPLICADOS} de los clústers cero y uno, que son los clústers con más instancias.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=180mm]{imagenes/c3_dbscan_pairplot}
+  \includegraphics[width=170mm]{imagenes/c3_dbscan_pairplot}
 \end{figure}
 
 
@@ -1204,7 +1204,10 @@ Aunque ambos algoritmos crean el mismo número de clústers ``representativos'',
 
 \subsubsection{Interpretación de la segmentación}
 
-Con los dos algoritmos hay un clúster más grande que el resto, que es aquel sin heridos graves ni muertos, y de uno a tres heridos leves. Por tanto vemos que en este caso de uso no suele haber accidentes muy graves. Los clústers con muertos tienen menos de 35 instancias. También hay entorno a 230 accidentes con heridos graves y sin muertos. Por tanto el atributo \texttt{TOT\_MUERTOS} caracteriza a uno de los clústers y el atributo \texttt{TOT\_HERIDOS\_GRAVES} diferencia de uno a dos de los clústers creados de los demás. 
+Con los dos algoritmos hay un clúster más grande que el resto, que es aquel sin heridos graves ni muertos, y de uno a tres heridos leves. Por tanto vemos que en este caso de uso no suele haber accidentes muy graves. Los clústers con muertos tienen menos de 35 instancias. También hay entorno a 230 accidentes con heridos graves y sin muertos. Por tanto el atributo \texttt{TOT\_MUERTOS} caracteriza a uno de los clústers y el atributo \texttt{TOT\_HERIDOS\_GRAVES} diferencia de uno a dos de los clústers creados de los demás.
+
+\newpage
+\subsection{Comparación de los casos de estudio 2 y 3}
 
 \newpage
 \section{Contenido adicional}
@@ -1219,10 +1222,11 @@ Con los dos algoritmos hay un clúster más grande que el resto, que es aquel si
 \begin{itemize}
 \item Transparencias Tema 5: Clustering
 \item \href{https://www.todostuslibros.com/libros/manual-del-alumno-permiso-b-facilauto_978-84-09-08551-4}{Manual del alumno. Permiso B}
-\item \href{https://github.com/SofiaAlmeida/IN/blob/master/P2/memoria.pdf}{https://github.com/SofiaAlmeida/IN/blob/master/P2/memoria.pdf}
 \item \href{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html\#sklearn.cluster.KMeans.fit}{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html\#sklearn.cluster.KMeans.fit}
 \item \href{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html\#sklearn.cluster.DBSCAN}{https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html\#sklearn.cluster.DBSCAN}
 \item \href{https://es.wikipedia.org/wiki/DBSCAN}{https://es.wikipedia.org/wiki/DBSCAN}
+\item \href{https://github.com/SofiaAlmeida/IN/blob/master/P2/memoria.pdf}{https://github.com/SofiaAlmeida/IN/blob/master/P2/memoria.pdf}
+\item \href{https://towardsdatascience.com/visualizing-data-with-pair-plots-in-python-f228cf529166}{https://towardsdatascience.com/visualizing-data-with-pair-plots-in-python-f228cf529166}
 \end{itemize}
 
 \end{document}
