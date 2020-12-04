@@ -391,21 +391,21 @@ Los centroides de los diferentes clusters son:
   \includegraphics[width=120mm]{imagenes/c1_kmeans_centroides}
 \end{figure}
 
-El clúster $0$, que es aquel con más instancias, tiene como centro un accidente con $2.059$ vehículos implicados, del que $1.387$ personas han sido heridos leves, pero sin muertos ni heridos graves. Es el clúster cuyo centro tiene un menor número de víctimas, y las que tiene son heridos leves.
+El clúster $0$, que es aquel con más instancias, tiene como centro un accidente con $2.059$ vehículos implicados, del que $1.387$ personas han sido heridos leves, pero sin muertos ni heridos graves. Es el clúster cuyo centro tiene un menor número de víctimas, y las que tiene son heridos leves. Podemos deducir que en este clúster estarán accidentes sin heridos graves ni muertos, y aunque el número de heridos leves varíe, hay más accidentes con un sólo herido leve.
 
-El clúster $1$ tiene como centro un accidente con $3,573$ víctimas, en el que $2,342$ son heridos graves, $1.043$ son heridos leves y $0.188$ son muertos. Hubo $2.162$ vehículos implicados. Es el clúster con mayor número de heridos graves de media, pero es el segundo clúster con menos instancias.
+El clúster $1$ tiene como centro un accidente con $3,573$ víctimas, en el que $2,342$ son heridos graves, $1.043$ son heridos leves y $0.188$ son muertos. Hubo $2.162$ vehículos implicados. Es el clúster con mayor número de heridos graves de media, pero es el segundo clúster con menos instancias. Por tanto vemos que el número de accidentes con muchos heridos graves no es tan alto como el número de accidentes con un sólo herido leve.
 
-El clúster $2$ tiene como centro un accidente con $3.981$ víctimas, la mayoría heridos leves. Tiene de media más víctimas y heridos leves que el resto, pero es el segundo con menos heridos graves. Como en el resto de clústers, los vehículos involucrados están alrededor de $2$.
+El clúster $2$ tiene como centro un accidente con $3.981$ víctimas, la mayoría heridos leves. Tiene de media más víctimas y heridos leves que el resto, pero es el segundo con menos heridos graves. Como en el resto de clústers, los vehículos involucrados están alrededor de $2$. Por tanto, podemos esperar que en este clúster haya instancias con un gran número de heridos leves, pero sin muertos o heridos graves en la mayoría de ellos.
 
-El clúster $3$ tiene como centro un accidente con $2.3850$ víctimas. Tiene de media más muertos que el resto, $1.358$ muertos. También tiene $0.477$ heridos graves y 0.55 heridos leves. El el clúster con menos instancias de los cinco.
+El clúster $3$ tiene como centro un accidente con $2.3850$ víctimas. Tiene de media más muertos que el resto, $1.358$ muertos. También tiene $0.477$ heridos graves y 0.55 heridos leves. El el clúster con menos instancias de los cinco. Por tanto, esperamos que este clúster sea el que tenga los accidentes donde hay muertos, pero el número de muertos medio es más cercano a uno que a dos, luego la mayoría tendrán sólo un muerto.
 
-El clúster 4 tiene como centro un accidente con $1.648$ víctimas, pero ningún muerto. Es el segundo clúster con más heridos graves y el segundo con menos heridos leves. Como en el resto de clústers, el número de vehículos implicados está entorno a dos.
+El clúster 4 tiene como centro un accidente con $1.648$ víctimas, pero ningún muerto. Es el segundo clúster con más heridos graves y el segundo con menos heridos leves. Como en el resto de clústers, el número de vehículos implicados está entorno a dos. Podemos deducir que la mayoría de accidentes de este clúster tienen entre cero y un herido leve y un herido grave.
 
 Las diferencias entre los distintos clústers pueden visualizarse con \texttt{pairplot}:
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=166mm]{imagenes/c1_kmeans_pairplot}
+  \includegraphics[width=140mm]{imagenes/c1_kmeans_pairplot}
 \end{figure}
 
 Podemos corroborar lo que vimos con los centroides, que todos los clústers suelen tener entorno a 2 vehículos implicados. También observamos que el atributo \texttt{TOT\_VICTIMAS} es directamente proporcional a los atributos \texttt{TOT\_HERIDOS\_GRAVES}, \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_MUERTOS}. En el atributo \texttt{TOT\_HERIDOS\_GRAVES} nos ayuda a discernir el clúster 1 de los clusters 2 y 3, ya que podemos ver que las distribuciones de este atributo en los clústers son distintas. El atributo \texttt{TOT\_HERIDOS\_LEVES} diferencia los clústers 4, 0 y 2. Para ver estas diferencias de manera más detallada podemos usar \texttt{boxplot}:
@@ -516,23 +516,23 @@ Los centroides de los diferentes clusters son:
   \includegraphics[width=130mm]{imagenes/c1_dbscan_centroides}
 \end{figure}
 
-El clúster 0 tiene como centro un accidente con 2 vehículos implicados, en el que 1.922 personas han sido heridos leves, pero sin muertos ni heridos graves. Este clúster es aquel con mayor número de instancias, conteniendo el $62.71\%$ de instancias.
+El clúster 0 tiene como centro un accidente con 2 vehículos implicados, en el que 1.922 personas han sido heridos leves, pero sin muertos ni heridos graves. Este clúster es aquel con mayor número de instancias, conteniendo el $62.71\%$ de instancias. Este clúster por tanto estará formado mayoritariamente por accidentes sin heridos graves ni muertos, y con dos heridos leves.
 
-El clúster 1 tiene como centro un accidente con 2.969 víctimas, dos heridos graves y 0.969 heridos leves, sin muertos. Dos vehículos se han visto involucrados.
+El clúster 1 tiene como centro un accidente con 2.969 víctimas, dos heridos graves y 0.969 heridos leves, sin muertos. Dos vehículos se han visto involucrados. Este clúster estará formado mayoritariamente por accidentes con dos heridos graves y un herido leve.
 
-El clúster 2 tiene como centro un accidente con 1.973 víctima, un herido grave y 0.973 heridos leves, y dos vehículos implicados. Es el segundo clúster con mayor número de accidentes.
+El clúster 2 tiene como centro un accidente con 1.973 víctima, un herido grave y 0.973 heridos leves, y dos vehículos implicados. Es el segundo clúster con mayor número de accidentes. Este clúster estará formado mayoritariamente por accidentes con un heridos graves y un herido leve.
 
-El clúster 3 tiene como centro un accidente con 1.585 víctimas, de las cuales una es un muerto y 0.585, heridos leves. Hubo dos vehículos implicados.
+El clúster 3 tiene como centro un accidente con 1.585 víctimas, de las cuales una es un muerto y 0.585, heridos leves. Hubo dos vehículos implicados. Este clúster estará formado principalmente por accidentes con un muerto y entre cero y un herido leve.
 
-El clúster 4 tiene como centro un accidente con dos vehículos implicados, que tiene como resultado 2.52 víctimas, un muerto, un herido grave y 0.52 heridos leves.
+El clúster 4 tiene como centro un accidente con dos vehículos implicados, que tiene como resultado 2.52 víctimas, un muerto, un herido grave y 0.52 heridos leves. Podemos deducir que este clúster lo formarán principalmente accidentes con un muerto, un herido grave y entre cero y un herido leve.
 
-El clúster 5 tiene como centro un accidente con 1.961 víctimas, todas ellas heridos leves. Hubo tres vehículos implicados.
+El clúster 5 tiene como centro un accidente con 1.961 víctimas, todas ellas heridos leves. Hubo tres vehículos implicados. Por tanto, este clúster lo formarán accidentes sin heridos graves ni muertos, y mayoritariamente dos heridos leves.
 
-El clúster 6 tiene como centro un accidente con 3.273 víctimas, tres heridas gravemente y 0.273 heridos leves. Hubo dos vehículos implicados en este accidente. Es el clúster con menos instancias, sólo 11.
+El clúster 6 tiene como centro un accidente con 3.273 víctimas, tres heridas gravemente y 0.273 heridos leves. Hubo dos vehículos implicados en este accidente. Es el clúster con menos instancias, sólo 11. Este clúster lo formarán principalmente los accidentes con mayor número de heridos graves, tres de media, y sin muertos ni heridos leves, ya que el número de heridos leves es más cercano a cero que a uno.
 
-El clúster 7 tiene como centro un accidente con 2.571 víctimas, un herido grave y el resto heridos leves. Hubo tres vehículos implicados.
+El clúster 7 tiene como centro un accidente con 2.571 víctimas, un herido grave y el resto heridos leves. Hubo tres vehículos implicados. Formarán este clúster los accidentes con un herido grave y entre uno y dos heridos leves.
 
-El clúster 8 tiene como centro un accidente con un muerto, dos heridos graves y 0.833 heridos leves. Hubo dos vehículos implicados. Es el segundo clúster con menor número de instancias.
+El clúster 8 tiene como centro un accidente con un muerto, dos heridos graves y 0.833 heridos leves. Hubo dos vehículos implicados. Es el segundo clúster con menor número de instancias. Este clúster estará formado por tanto por accidentes con un muerto, dos heridos graves y principalmente un herido leve.
 
 El centro del clúster $-1$ no aporta mucha información, dado que está compuesto por todos aquellos datos que no encajan con el resto de clúster, por lo tanto hay una gran variabilidad entre los atributos de los accidentes asignados a este clúster.
 
@@ -643,7 +643,7 @@ Nos preguntamos si durante los fines de semana hay un mayor número de víctimas
   \includegraphics[width=87mm]{imagenes/c2_selec_atr}
 \end{figure}
 
-Obtenemos que efectivamente la variabilidad de este atributo es mayor en el fin de semana que en el resto de días, por lo que decidimos elegir como nuestro segundo caso los accidentes ocurridos los viernes, sábados o domingos.  Además, elegí aquellos accidentes en los que la densidad de circulación es ``DENSA'', que representarán los días en los que mucha gente se desplace para disfrutar del fin de semana, como festividades.
+Obtenemos que efectivamente la variabilidad de este atributo es mayor en el fin de semana que en el resto de días. Además vemos no hay en la base de datos un número de accidentes significativo mayor cualquiera de estos días, es decir, que el número de accidentes cada día es más o menos homogeneo. Por estos motivos decidimos elegir como nuestro segundo caso los accidentes ocurridos los viernes, sábados o domingos. Además, elegí aquellos accidentes en los que la densidad de circulación es ``DENSA'', que representarán los días en los que mucha gente se desplace para disfrutar del fin de semana, como festividades.
 
 \subsubsection{K-means}
 
@@ -718,23 +718,23 @@ Los centroides de los diferentes clusters son:
   \includegraphics[width=130mm]{imagenes/c2_kmeans_centroides}
 \end{figure}
 
-El clúster 0 tiene como centro un accidente con 3.244 vehículos implicados, en el que 0.993 personas han sido heridos leves y 0.007 heridos graves, pero sin muertos.
+El clúster 0 tiene como centro un accidente con 3.244 vehículos implicados, en el que 0.993 personas han sido heridos leves y 0.007 heridos graves, pero sin muertos. Por tanto los accidentes más representativos de este clúster serán aquellos sin muertos ni heridos graves, y un herido leve.
 
-El clúster 1 tiene como centro un accidente con 3.312 víctimas, 3.262 heridos leves y 0.050 heridos graves, sin muertos. Se han visto involucrados 2.404 vehículos.
+El clúster 1 tiene como centro un accidente con 3.312 víctimas, 3.262 heridos leves y 0.050 heridos graves, sin muertos. Se han visto involucrados 2.404 vehículos. Este clúster estará formado principalmente por accidentes con tres víctimas, todas ellas heridos leves.
 
-El clúster 2 tiene como centro un accidente con 1 víctima, herida levemente, y dos vehículos implicados.
+El clúster 2 tiene como centro un accidente con 1 víctima, herida levemente, y dos vehículos implicados. Parece que la variavilidad de accidentes de este clúster es baja, coincidiendo con su centro los accidentes que lo forman.
 
-El clúster 3 tiene como centro un accidente con 1.941 vehículos implicados, en el que 1.294 personas han sido heridos leves, 0.588 heridos leves y un muerto.
+El clúster 3 tiene como centro un accidente con 1.941 vehículos implicados, en el que 1.294 personas han sido heridos leves, 0.588 heridos leves y un muerto. Este clúster lo formarán aquellos accidentes con muertos. La media de muertos de este clústere es uno.
 
-El clúster 4 tiene como centro un accidente con 5.771 víctimas, 5.604 heridos leves y 0.167 heridos graves, sin muertos. Se han visto involucrados 3.125 vehículos.
+El clúster 4 tiene como centro un accidente con 5.771 víctimas, 5.604 heridos leves y 0.167 heridos graves, sin muertos. Se han visto involucrados 3.125 vehículos. Este clúster se caracteriza por un alto número de heridos leves, la mayoría de los accidentes de él tendrán entre cinco y seis heridos leves.
 
-El clúster 5 tiene como centro un accidente con 1.372 víctimas, 0.271 heridos leves y 1.101 heridos graves, sin muertos. Se han visto involucrados 1.636 vehículos.
+El clúster 5 tiene como centro un accidente con 1.372 víctimas, 0.271 heridos leves y 1.101 heridos graves, sin muertos. Se han visto involucrados 1.636 vehículos. Este clúster se caracteriza por tener el mayor número de heridos graves, pero la mayoría de accidentes que lo componen no tendrán ni muertos ni heridos leves.
 
-El clúster 6 tiene como centro un accidente con 2 víctimas, heridas levemente, sin heridos graves ni muertos. Se han visto involucrados 2.112 vehículos.
+El clúster 6 tiene como centro un accidente con 2 víctimas, heridas levemente, sin heridos graves ni muertos. Se han visto involucrados 2.112 vehículos. Loa accidentes de este clúster no presentan una alta variabilidad con su centro excepto en el número de vehículos involucrados, que será entorno a dos en la mayoría de éstos.
 
-El clúster 7 tiene como centro un accidente con 4.773 vehículos implicados, en el que 2.32 personas han sido heridos leves, 0.013 heridos leves y sin muertos.
+El clúster 7 tiene como centro un accidente con 4.773 vehículos implicados, en el que 2.32 personas han sido heridos leves, 0.013 heridos leves y sin muertos. Los accidentes de este clúster son aquellos con más vehículos involucrados, estando la media cercana a cinco vehículos. En éstos no suele haber ni heridos ni muertos y hay entre dos y tres heridos leves de media.
 
-El clúster 8 tiene como centro un accidente con una víctimas, herida levemente, sin heridos graves ni muertos y un sólo vehículo implicado.
+El clúster 8 tiene como centro un accidente con una víctimas, herida levemente, sin heridos graves ni muertos y un sólo vehículo implicado. Los accidentes de este clúster parecen no tener ninguna variabilidad respecto a su centro.
 
 Utilizamos la función \texttt{pairplot} para ver las diferencias entre los distintos clústers:
 
@@ -871,8 +871,9 @@ El clúster 6 tiene como centro un accidente con 2.886 vehículos implicados en 
 
 El clúster 7 tiene como centro un accidente con 5 víctimas, las cinco heridas leves. Hubo tres vehículos implicados.
 
-Vemos que el atributo \texttt{TOT\_MUERTOS} tiene media cero en todos los clústers, y sólo dos de ellos tienen de media el atributo \texttt{TOT\_HERIDOS\_GRAVES} distinto de cero. Los atributos que más varían entre los clústers son \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_VEHICULOS\_IMPLICADOS}.
+Los accidentes que componen los clústers representativos parecen no tener ninguna variabilidad respecto a su centro en todos los atributos a excepción del número de vehículos implicados, por tanto los accidentes que los forman son aquellos que tienen exáctamente el mismo valor en todos sus atributos a excepción del número de vehículos implicados que el centro.
 
+Vemos que el atributo \texttt{TOT\_MUERTOS} tiene media cero en todos los clústers, y sólo dos de ellos tienen de media el atributo \texttt{TOT\_HERIDOS\_GRAVES} distinto de cero. Los atributos que más varían entre los clústers son \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_VEHICULOS\_IMPLICADOS}.
 
 Como con K-Mean, utilizé \texttt{pairplot} con la esperanza de ver diferencias entre los distintos clústers, pero los resultados no son los esperados y sólo podemos ver la distribución del atributo \texttt{TOT\_VEHICULOS\_IMPLICADOS} en los diferentes clústers, que, como veremos a continuación en el diagrama de cajas, es el único atributo con variabilidad en los clústers.
 
@@ -1018,13 +1019,13 @@ Los centroides de los diferentes clusters son:
   \includegraphics[width=106mm]{imagenes/c3_kmeans_centroides}
 \end{figure}
 
-El clúster 0 tiene como centro un accidente con 2.155 vehículos implicados, en el que 1.256 personas han sido heridas levemente, pero sin muertos ni heridos graves. Este clúster es aquel con más instancias de los cuatro.
+El clúster 0 tiene como centro un accidente con 2.155 vehículos implicados, en el que 1.256 personas han sido heridas levemente, pero sin muertos ni heridos graves. Este clúster es aquel con más instancias de los cuatro. Podemos deducir que este clúster estará formado por accidentes sin muertos ni heridos graves, y principalmente un herido leve.
 
-El clúster 1 tiene como centro un accidente con 0.451 heridos leves, 1.094 heridos graves y 0.004 muertos. Se han visto involucrados 1.936 vehículos. Este clúster es el clúster con mayor número de heridos graves de media.
+El clúster 1 tiene como centro un accidente con 0.451 heridos leves, 1.094 heridos graves y 0.004 muertos. Se han visto involucrados 1.936 vehículos. Este clúster es el clúster con mayor número de heridos graves de media. Este clúster estará formado por los accidentes con heridos graves, entando la media en un herido grave. Además tienen entre cero y un herido leve.
 
-El clúster 2 tiene como centro un accidente con 3.813 víctimas, 0.003 heridos graves y 3.81 heridos leves, y 3.07 vehículos implicados. Por tanto, este clúster es aquel con más heridos leves de media y más vehículos implicados.
+El clúster 2 tiene como centro un accidente con 3.813 víctimas, 0.003 heridos graves y 3.81 heridos leves, y 3.07 vehículos implicados. Por tanto, este clúster es aquel con más heridos leves de media y más vehículos implicados. Estos accidentes son aquellos sin heridos graves ni muertos y principalmente cuatro heridos leves.
 
-El clúster 3 tiene como centro un accidente con 1.094 víctimas, 1.094 muertos, 0.094 heridos graves y 0.219 heridos leves. Hubo 1.719 vehículos implicados. Este clúster es aquel con menos accidentes, representa el $1.23\%$ de los accidentes, y es el que mayor número de muertos tiene de media.
+El clúster 3 tiene como centro un accidente con 1.094 víctimas, 1.094 muertos, 0.094 heridos graves y 0.219 heridos leves. Hubo 1.719 vehículos implicados. Este clúster es aquel con menos accidentes, representa el $1.23\%$ de los accidentes, y es el que mayor número de muertos tiene de media, de hecho, es el único donde la mayoría de accidentes tienen muertos, estando la media en un muerto. la mayoría de ellos no tendrán ni heridos leves ni graves.
 
 Vemos que el clúster uno se diferencia del resto por su valor del atributo \texttt{TOT\_HERIDOS\_GRAVES} y el clúster tres por el \texttt{TOT\_MUERTOS}. El clúster dos se caracteriza por el mayor valor de los atributos \texttt{TOT\_HERIDOS\_LEVES} y \\\texttt{TOT\_VEHICULOS\_IMPLICADOS}.
 
@@ -1032,7 +1033,7 @@ Utilizé \texttt{pairplot} para ver diferencias entre los distintos clústers. L
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=170mm]{imagenes/c3_kmeans_pairplot}
+  \includegraphics[width=148mm]{imagenes/c3_kmeans_pairplot}
 \end{figure}
 
 Vemos las diferentes dirtribuciones los atributos \texttt{TOT\_VICTIMAS}, \texttt{TOT\_HERIDOS\_LEVES} y \texttt{TOT\_VEHICULOS\_IMPLICADOS} entre los clústers cero, uno y dos. El atributo \texttt{TOT\_MUERTOS} separa los elementos del clúster uno de los del clúster 3. Podemos ver las diferencias entre el clúster uno, dos y tres por sus distribuciones de \texttt{TOT\_HERIDOS\_GRAVES}.
@@ -1131,13 +1132,13 @@ Los centroides de los diferentes clusters son:
   \includegraphics[width=130mm]{imagenes/c3_dbscan_centroides}
 \end{figure}
 
-El clúster 0 tiene como centro un accidente con 2.269 vehículos implicados, en el que 1.618 personas han sido heridas levemente, pero sin muertos ni heridos graves.
+El clúster 0 tiene como centro un accidente con 2.269 vehículos implicados, en el que 1.618 personas han sido heridas levemente, pero sin muertos ni heridos graves. Loa accidentes de este clśter tendrán un mayor número de heridos leves, entre uno y dos, pero sin heridos graves ni muertos.
 
-El clúster 1 tiene como centro un accidente con 1.37 víctimas, una herida grave y 0.37 heridos leves, sin muertos. Se han visto involucrados 1.858 vehículos.
+El clúster 1 tiene como centro un accidente con 1.37 víctimas, una herida grave y 0.37 heridos leves, sin muertos. Se han visto involucrados 1.858 vehículos. Por tanto, este clúster estará formado mayoritariamente por accidentes con un herido grave.
 
-El clúster 2 tiene como centro un accidente con un muerto y 0.222 heridos leves. Hubo 1.704 vehículos implicados.
+El clúster 2 tiene como centro un accidente con un muerto y 0.222 heridos leves. Hubo 1.704 vehículos implicados. Los accidentes de este clúster son aquellos con muertos, estando la media en un muerto.
 
-El clúster 3 tiene como centro un accidente con 2.412 víctimas, dos heridos graves y 0.412 heridos leves, y 2.294 vehículos implicados.
+El clúster 3 tiene como centro un accidente con 2.412 víctimas, dos heridos graves y 0.412 heridos leves, y 2.294 vehículos implicados. Los accidentes de este clúster son aquellos con mayor número de heridos graves, estando la media en dos. Además la mayoría tienen entre cero y un herido leve.
 
 El clúster dos es el único con un valor medio de \texttt{TOT\_MUERTOS} distinto de cero. El clúster cero, que es el que más accidentes posee, es el único que tiene media nula tanto en \texttt{TOT\_MUERTOS} como en \texttt{TOT\_HERIDOS\_GRAVES}. Los clústers uno y tres se diferencian por su media de \texttt{TOT\_HERIDOS\_GRAVES}.
 
@@ -1147,7 +1148,7 @@ Como en el resto de casos, utilizé \texttt{pairplot} con el objetivo de ver dif
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=170mm]{imagenes/c3_dbscan_pairplot}
+  \includegraphics[width=149mm]{imagenes/c3_dbscan_pairplot}
 \end{figure}
 
 
@@ -1217,7 +1218,7 @@ Vemos que en el caso dos se han formado más clústers que en el caso tres, por 
 
 Respecto a las víctimas de los accidentes, la proporción de accidentes con un muerto en ambos casos es muy parecida, entorno a un $1.22\%$, sin embargo, los accidentes producidos de viernes a domingo a parte del muerto hubo más heridos en dicho accidente, entre cero y dos heridos graves y entre cero y cuatro heridos leves, mientras que en el otro caso la única víctima en el accidente fue el fallecido. En ambos casos hay entre uno y tres vehículos implicados en estos accidentes. Por tanto observamos que los accidentes producidos en fin de semana con muertos tiene un mayor número de víctimas que el resto de días.
 
-También observamos que los accidentes del caso 2 tienen un mayor número de heridos leves que los del caso 3. Si miramos el boxplot del clúster 4 formado con el algoritmo KMeans, este clúster tiene de 5 a 7 víctimas, todas ellas heridos leves. Lo mismo ocurre con el clúster 4 formado con DBSCAN, que tiene seis heridos leves. Sin embargo, en los accidentes ocurridos de lunes a jueves no hay más de 5 heridos leves. Por tanto el total de víctimas en la mayoría de los accidentes del caso dos se mueve entre una y siete, mientras que las del caso tres se mueve entre una y cinco. Vemos que el atributo heridos leves tiene mayor variabilidad entre los clústers del caso 2 que en el caso 3.
+También observamos que los accidentes del caso 2 tienen un mayor número de heridos leves que los del caso 3. Si miramos el boxplot del clúster 4 formado con el algoritmo KMeans, este clúster tiene de 5 a 7 víctimas, todas ellas heridos leves. Lo mismo ocurre con el clúster 4 formado con DBSCAN, que tiene seis heridos leves. Sin embargo, en los accidentes ocurridos de lunes a jueves no hay más de 5 heridos leves. Vemos que el atributo heridos leves tiene mayor variabilidad entre los clústers del caso 2 que en el caso 3. Por consiguiente, el total de víctimas en la mayoría de los accidentes del caso dos se mueve entre una y siete, mientras que las del caso tres se mueve entre una y cinco. Además, como vimos en el boxplot que nos llevó a considerar elegir este caso de estudio, como en los clústers más poblados el número de víctimas es menor, si nos fijamos en los datos en su conjunto vemos que la mayoría de accidentes del caso tres el número de heridos es uno, mientras en el caso dos, el número de heridos está entre uno y tres.
 
 Otra de las diferencias entre los casos es el número de coches implicados. En los accidentes producidos de viernes a domingo este atributo tiene una mayor variabilidad, habiendo clústers con hasta seis vehículos implicados, mientras que en el otro caso no hay más de cuatro vehículos implicados en estos accidentes.
 
@@ -1225,6 +1226,39 @@ En ambos casos el accidente más común es aquel sin muertos ni heridos graves, 
 
 \newpage
 \section{Contenido adicional}
+
+En esta sección analizaremos otros atributos no contemplados en el clústering para ver qué factores intervinieron en aquellos accidentes de los clústers conseguidos con el algoritmo K-means con mayor número de víctimas.
+
+\subsection{Caso 1}
+
+Estudiamos los accidentes de los clústers uno, dos y tres, que son aquellos con mayor número de heridos graves, heridos leves y muertos, respectivamente. 
+
+Primero me planteé si la severidad de estos accidentes puede deberse a condiciones atmosféricas adversas, por lo que comparamos el porcentaje de accidentes con diversos factores atmosféricos posibles registrados en estos tres clústers. Además, también exponemos la distribución de este atributo en todos los datos del caso dos como conjunto, para ver cómo sobresalen estos clústers.
+
+Factores atmosfericos
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+  \multicolumn{1}{|c|}{\textbf{Conjunto}} & \textbf{Buen tiempo} & \textbf{Lluvia fuerte} &  \textbf{Viento fuerte} & \textbf{Granizando}\\ \hline
+  Caso 2    & $79.49\%$ & $3.59\%$ & $0.48\%$ & $0.345\%$ \\ \hline
+  Clúster 1 & $85.47\%$ & $3.42\%$ & $1.71\%$ & $0.85\%$  \\ \hline
+  Clúster 2 & $80\%$    & $4.44\%$ & $0.37\%$ & $0.37\%$  \\ \hline
+  Clúster 3 & $87.16\%$ & $0.92\%$ & $0.92\%$ & $0.92\%$  \\ \hline
+\end{tabular}
+\end{center}
+
+Luminosidad (NOOOOO)
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+  \multicolumn{1}{|c|}{\textbf{Conjunto}} & \textbf{Buen tiempo} & \textbf{Lluvia fuerte} &  \textbf{Viento fuerte} & \textbf{Granizando}\\ \hline
+  Caso 2    & $79.49\%$ & $3.59\%$ & $0.48\%$ & $0.345\%$ \\ \hline
+  Clúster 1 & $85.47\%$ & $3.42\%$ & $1.71\%$ & $0.85\%$  \\ \hline
+  Clúster 2 & $80\%$    & $4.44\%$ & $0.37\%$ & $0.37\%$  \\ \hline
+  Clúster 3 & $87.16\%$ & $0.92\%$ & $0.92\%$ & $0.92\%$  \\ \hline
+\end{tabular}
+\end{center}
+
 \section{Bibliografía}
 
 \textbf{Visualización}
