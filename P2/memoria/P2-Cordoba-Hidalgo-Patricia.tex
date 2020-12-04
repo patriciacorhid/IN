@@ -1233,31 +1233,84 @@ En esta sección analizaremos otros atributos no contemplados en el clústering 
 
 Estudiamos los accidentes de los clústers uno, dos y tres, que son aquellos con mayor número de heridos graves, heridos leves y muertos, respectivamente. 
 
-Primero me planteé si la severidad de estos accidentes puede deberse a condiciones atmosféricas adversas, por lo que comparamos el porcentaje de accidentes con diversos factores atmosféricos posibles registrados en estos tres clústers. Además, también exponemos la distribución de este atributo en todos los datos del caso dos como conjunto, para ver cómo sobresalen estos clústers.
+Primero me planteé si la severidad de estos accidentes puede deberse a poca visibilidad en la carretera, por lo que comparamos el porcentaje de accidentes con diversas condiciones de luminosidad posibles registradas en estos tres clústers. Además, también exponemos la distribución de este atributo en todos los datos del caso dos como conjunto, para ver cómo sobresalen estos clústers.
 
-Factores atmosfericos
 \begin{center}
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-  \multicolumn{1}{|c|}{\textbf{Conjunto}} & \textbf{Buen tiempo} & \textbf{Lluvia fuerte} &  \textbf{Viento fuerte} & \textbf{Granizando}\\ \hline
-  Caso 2    & $79.49\%$ & $3.59\%$ & $0.48\%$ & $0.345\%$ \\ \hline
-  Clúster 1 & $85.47\%$ & $3.42\%$ & $1.71\%$ & $0.85\%$  \\ \hline
-  Clúster 2 & $80\%$    & $4.44\%$ & $0.37\%$ & $0.37\%$  \\ \hline
-  Clúster 3 & $87.16\%$ & $0.92\%$ & $0.92\%$ & $0.92\%$  \\ \hline
+  \multicolumn{1}{|c|}{\textbf{Conjunto}} & \textbf{Pleno día} & \textbf{Noche sin iluminación} &  \textbf{Noche con luz suficiente} & \textbf{Noche con luz insuficiente}\\ \hline
+  Caso 1    & $72.72\%$ & $12.29\%$ & $5.18\%$ & $5.11\%$ \\ \hline
+  Clúster 1 & $67.52\%$ & $16.23\%$ & $1.7 \%$ & $9.40\%$ \\ \hline
+  Clúster 2 & $72.59\%$ & $15.55\%$ & $2.6 \%$ & $5.90\%$ \\ \hline
+  Clúster 3 & $70.64\%$ & $20.18\%$ & $0.91\%$ & $3.67\%$ \\ \hline
 \end{tabular}
 \end{center}
 
-Luminosidad (NOOOOO)
+Vemos que el porcentaje de accidentes ocurridos en pleno día es menor en estos conjuntos que en el conjunto de datos considerado en este caso de estudio. El clúster tres, que es el que mayor número de víctimas mortales tiene, tiene una mayor proporción de accidentes ocurridos durante la noche sin iluminación. Los otros dos clústers, aunque con un porcentaje menor, también superan el porcentaje del conjunto formado por los datos del caso uno. El clúster uno, que es aquel con mayor número de heridos grave, destaca por tener una mayor proporción de accidentes ocurridos durante la noche con luminosidad insuficiente. Por tanto comprobamos que efectivamente la falta de luminosidad es un factor que influye en la gravedad de este tipo de accidentes.
+
+También nos preguntamos si el día de la semana tiene alguna repercusión en estos accidentes, dado que vimos que en el conjunto total de datos sí era un factor determinante respecto al número de víctimas del accidente. Obtenemos los siguientes resultados:
+
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline
-  \multicolumn{1}{|c|}{\textbf{Conjunto}} & \textbf{Buen tiempo} & \textbf{Lluvia fuerte} &  \textbf{Viento fuerte} & \textbf{Granizando}\\ \hline
-  Caso 2    & $79.49\%$ & $3.59\%$ & $0.48\%$ & $0.345\%$ \\ \hline
-  Clúster 1 & $85.47\%$ & $3.42\%$ & $1.71\%$ & $0.85\%$  \\ \hline
-  Clúster 2 & $80\%$    & $4.44\%$ & $0.37\%$ & $0.37\%$  \\ \hline
-  Clúster 3 & $87.16\%$ & $0.92\%$ & $0.92\%$ & $0.92\%$  \\ \hline
+  \multicolumn{1}{|c|}{\textbf{Conjunto}} & \textbf{Viernes} & \textbf{Sábado} &  \textbf{Domingo}\\ \hline
+  Caso 1    & $14.78\%$ & $14.50\%$ & $14.85\%$ \\ \hline
+  Clúster 1 & $18.80\%$ & $17.09\%$ & $16.24\%$ \\ \hline
+  Clúster 2 & $14.07\%$ & $15.93\%$ & $21.11\%$ \\ \hline
+  Clúster 3 & $19.27\%$ & $13.76\%$ & $12.84\%$ \\ \hline
 \end{tabular}
 \end{center}
+
+El clúster uno, aquel con mayor número de heridos graves, tiene un porcentaje mayor de accidentes ocurridos de viernes a domingo que los datos del caso uno en su conjunto. En el clúster dos, el caso con mayor número de heridos graves destacan los domingos y en el clúster tres, con mayor número de muertos, los viernes. Luego reafirmamos nuestra investigación del caso dos contemplando que los accidentes más graves tienen mayor incidencia de viernes a domingo.
+
+\subsection{Caso 2}
+
+Estudiamos los accidentes de los clústers tres, cuatro y cinco, que son aquellos con mayor número de muertos, heridos leves y heridos graves, respectivamente.
+
+Dado que los accidentes ocurren en fin de semana, las personas tenían mayor libertad de movimiento y podían viajar así a otras ciudades, así que observamos si la mayoría de accidentes ocurren en vías urbanas o interurbanas.
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+  \multicolumn{1}{|c|}{\textbf{Conjunto}} & \textbf{Interurbana} & \textbf{Urbana} \\ \hline
+  Caso 2    & $56.62\%$ & $43.38\%$ \\ \hline
+  Clúster 3 & $76.47\%$ & $23.53\%$ \\ \hline
+  Clúster 4 & $68.75\%$ & $31.25\%$ \\ \hline
+  Clúster 5 & $55.04\%$ & $44.96\%$ \\ \hline
+\end{tabular}
+\end{center}
+
+En general, hay más accidentes en vías interurbanas que en urbanas, destacando la proporción de accidentes en vías interurbanas del clúster tres, que es aquel con mayor número de muertos. Los accidentes del clúster cuatro considerados también ocurren más en vías interurbanas que en vías urbanas, sin embargo, los accidentes con más heridos graves ocurren con menor frecuencia en vías interurbanas que en el conjunto de accidentes del caso dos.
+
+Para descubrir la razón de la gravedad de los accidentes del clúster cinco, miramos la proporción de atropellos de los clústers.
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+  \multicolumn{1}{|c|}{\textbf{Conjunto}} & \textbf{Atropellos}\\ \hline
+  Caso 2    & $9.76\%$  \\ \hline
+  Clúster 3 & $29.41\%$ \\ \hline
+  Clúster 4 & $0\%$     \\ \hline
+  Clúster 5 & $20.15\%$ \\ \hline
+\end{tabular}
+\end{center}
+
+Vemos que el porcentaje de atropellos entre los accidentes del clúster cinco y los del clúster tres es superior a la del conjunto de accidentes considerados en este caso de estudio. Como estos clústers son los correspondientes a los accidentes con mayor número de muertos y heridos graves, deducimos que el atropello es uno de los tipos de accidentes que más víctimas graves ocasiona dentro de este caso de estudio.
+
+Los accidentes del clúster cuatro, con mayor número de heridos leves, se caracterizan por tener un mayor porcentaje de accidentes ocurridos en el crepúsculo o de noche con luminosidad suficiente que el resto de clústers considerados en esta sección, como vemos en la siguiente tabla:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+  \multicolumn{1}{|c|}{\textbf{Conjunto}} & \textbf{Noche sin iluminación} & \textbf{Noche iluminación suficiente} &  \textbf{Crepúsculo}\\ \hline
+  Caso 2    & $3.69 \%$ & $12.22\%$ & $4.41 \%$ \\ \hline
+  Clúster 3 & $29.41\%$ & $0    \%$ & $5.8  \%$ \\ \hline
+  Clúster 4 & $6.25 \%$ & $18.75\%$ & $8.33 \%$ \\ \hline
+  Clúster 5 & $3.1  \%$ & $15.5 \%$ & $5.4  \%$ \\ \hline
+\end{tabular}
+\end{center}
+
+Vemos que la proporción de accidentes ocurridos de de noche o durante el crepúsculo es mayor en los clústers de accidentes más graves que en el conjunto de datos del caso dos. Por consiguiente, como veíamos en el análisis del caso uno, este factor tiene gran influencia en la gravedad de los accidentes.
 
 \section{Bibliografía}
 
