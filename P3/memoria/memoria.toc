@@ -7,3 +7,4 @@
 \contentsline {subsection}{\numberline {3.3}p3\_02}{8}{subsection.3.3}%
 \contentsline {subsection}{\numberline {3.4}p3\_04}{9}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}p3\_05}{12}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}p3\_06}{12}{subsection.3.6}%

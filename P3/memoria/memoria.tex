@@ -170,12 +170,15 @@ Tras esto representamos el número de elementos por clase y observamos que las c
 
 \begin{figure}[H]
   \centering
-  \subfigure[Datos en cada clase]{\includegraphics[width=110mm]{imagenes/count}}
+  \caption{Datos en cada clase}
+  \includegraphics[width=85mm]{imagenes/count}
 \end{figure}
 
 Una vez que tenemos una idea de la distribución de los datos, pasamos a trabajar con ellos. Primero trabajamos con los valores perdidos. Si eliminásemos todos los valores perdidos, contaríamos sólo con el $11.68\%$ de los originales, con lo que perderíamos mucha información, así que descarté ese preprocesamiento.
 
-El preprocesamiento que realicé finalmente consiste en eliminar la variable Descuento, ya que el $86.32\%$ de sus valores son perdidos y eliminar el resto de valores perdidos restantes. Esto supone quedarnos con el $81.88\%$ de los datos originales. Reorganicé los índices para que fuesen del 1 al 3945, dado que posteriormente será necesario esta numeración para recorrer el dataframe con bucles. Esto fue realizado con el código:
+El preprocesamiento que realicé finalmente consiste en eliminar la variable Descuento, ya que el $86.32\%$ de sus valores son perdidos y eliminar el resto de valores perdidos restantes. Esto supone quedarnos con el $81.88\%$ de los datos originales. Reorganicé los índices para que fuesen del 1 al 3945, dado que posteriormente será necesario esta numeración para recorrer el dataframe con bucles.
+
+Esto fue realizado con el código:
 
 \begin{lstlisting}
 p2_datos = datos.copy()
@@ -221,7 +224,8 @@ También intenté identificar el parámetro de poda óptimo. Podemos comprobar q
 
 \begin{figure}[H]
   \centering
-  \subfigure[Selección de \texttt{ccp\_alpha}]{\includegraphics[width=85mm]{imagenes/p3_00_ccp_alpha}}
+  \caption{Selección de \texttt{ccp\_alpha}}
+  \includegraphics[width=85mm]{imagenes/p3_00_ccp_alpha}
 \end{figure}
 
 Tras todo el ajuste de hiperparámetros, el modelo final es aquel por defecto. Por tanto, para ver la \textit{accuracy} del modelo ejecutamos el siguiente código:
@@ -263,7 +267,8 @@ A la vista de los resultados tomamos 220 estimadores. También estimamos el valo
 
 \begin{figure}[H]
   \centering
-  \subfigure[Selección de \texttt{ccp\_alpha}]{\includegraphics[width=85mm]{imagenes/p3_01_ccp_alpha}}
+  \caption{Selección de \texttt{ccp\_alpha}}
+  \includegraphics[width=85mm]{imagenes/p3_01_ccp_alpha}
 \end{figure}
 
 La \textit{accuracy} del modelo en el conjunto training es 0.9015572858731924. Tras aplicar el mismo preporcesado al conjunto test, obtenemos que la \textit{accuracy} del conjunto test es 0.76186.
@@ -296,7 +301,8 @@ También decidí usar el valor 0 para el parámetro de poda. El motivo se encuen
 
 \begin{figure}[H]
   \centering
-  \subfigure[Selección de \texttt{ccp\_alpha}]{\includegraphics[width=85mm]{imagenes/p3_02_ccp_alpha}}
+  \caption{Selección de \texttt{ccp\_alpha}}
+  \includegraphics[width=85mm]{imagenes/p3_02_ccp_alpha}
 \end{figure}
 
 
@@ -308,7 +314,9 @@ En este intento quise probar con un modelo diferente, \texttt{MLP}. Este modelo 
 
 El procesamiento usado en esta prueba consiste entonces en eliminar, como en las anteriores, la variable Descuento y los valores nulos restantes. Luego pasamos los nombres de los coches a marcas, del mismo modo que hicimos en \texttt{p3\_02}, para reducir así el número de variables finales (habrá una variable por cada posible valor del atributo cualitativo al que apliquemos \texttt{OneHotEncoder}).
 
-En vez de aplicar \texttt{LabelEncoder} a las variables cualitativas, usé \texttt{OneHotEncoder}. Esto nos crea una nueva variable por cada uno de los posibles valores que tomase la variable a la que se lo aplicamos. Añadimos estas variables al \texttt{DataFrame} de datos y eliminamos la variable original. Un ejemplo del código usado para esto es:
+En vez de aplicar \texttt{LabelEncoder} a las variables cualitativas, usé \texttt{OneHotEncoder}. Esto nos crea una nueva variable por cada uno de los posibles valores que tomase la variable a la que se lo aplicamos. Añadimos estas variables al \texttt{DataFrame} de datos y eliminamos la variable original.
+
+Un ejemplo del código usado para esto es:
 
 \begin{lstlisting}
 encCiudad = OneHotEncoder(handle_unknown='ignore')
@@ -413,11 +421,44 @@ Una vez hecho esto, separamos los datos de las etiquetas, aplicamos oversampling
 
 \begin{figure}[H]
   \centering
-  \subfigure[Selección de \texttt{hidden\_layer\_sizes}]{\includegraphics[width=85mm]{imagenes/p3_04_layers}}
+  \caption{Selección de \texttt{hidden\_layer\_sizes}}
+  \includegraphics[width=85mm]{imagenes/p3_04_layers}
 \end{figure}
 
 La \textit{accuracy} del modelo en el conjunto training es 0.8652947719688543. Tras aplicar el mismo preporcesado al conjunto test, obtenemos que la \textit{accuracy} del conjunto test es 0.79637.
 
 \subsection{p3\_05}
+
+En este intento usé el mismo preprocesamiento de datos que en el anterior, pero el modelo que entrené fue \texttt{K-nn}. Ajustamos el parámetro \texttt{n\_neighbors}, obteniendo que el valor óptimo es 1.
+
+
+\begin{figure}[H]
+  \centering
+  \caption{Selección de \texttt{n\_neighbors}}
+  \includegraphics[width=85mm]{imagenes/p3_05_vecinos}
+\end{figure}
+
+La \textit{accuracy} del modelo en el conjunto training es 0.8818687430478309, superior a la obtenida con \texttt{MLP}. Sin embargo, tras aplicar el mismo preporcesado al conjunto test, obtenemos que la \textit{accuracy} del conjunto test es 0.68162, el peor resultado obtenido.
+
+\subsection{p3\_06}
+
+Con el mismo preprocesamiento usado en \texttt{p3\_04} entrenamos el algoritmo \texttt{Gradient Boosting}. El primer parámetro que seleccionamos es \texttt{n\_stimators}. Al igual que con \texttt{Random Forest} hacemos primero una visión global del comportamiento del algoritmo dependiendo de este parámetro y luego hacemos ejecuciones con valores menos espaciados entorno al máximo encontrado. A la vista de los resultados, escogemos el valor 760 para este parámetro.
+
+\begin{figure}[H]
+  \centering
+  \subfigure[Selección de \texttt{n\_stimators}]{\includegraphics[width=87mm]{imagenes/p3_06_n_estimadores1}}
+  \subfigure[Selección de \texttt{n\_stimators}]{\includegraphics[width=87mm]{imagenes/p3_06_n_estimadores2}}
+\end{figure}
+
+\newpage
+Buscamos también el valor óptimo para el parámetro \texttt{min\_samples\_leaf} y observamos que obtenemos los valores máximos de \textit{accuracy} en 1 y en 8. Elegí el valor 8 porque al exigir mayor número de muestras por nodo, evitas nodos con muy pocas muestras y así se puede reducir el sobreajuste.
+
+\begin{figure}[H]
+  \centering
+  \caption{Selección de \texttt{min\_samples\_leaf}}
+  \includegraphics[width=85mm]{imagenes/p3_06_n_hojas}
+\end{figure}
+
+
 
 \end{document}
