@@ -1,0 +1,112 @@
+\documentclass[a4]{article}
+
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry} 
+
+\usepackage[utf8]{inputenc}   % otra alternativa para los caracteres acentuados y la "Ã±"
+\usepackage[           spanish % para poder usar el espaÃ±ol
+                      ,es-tabla % para los captions de las tablas
+                       ]{babel}   
+\decimalpoint %para usar el punto decimal en vez de coma para los nÃºmeros con decimales
+
+%\usepackage{beton}
+%\usepackage[T1]{fontenc}
+
+\usepackage{parskip}
+\usepackage{xcolor}
+
+\usepackage{caption}
+
+\usepackage{enumerate} % paquete para poder personalizar fÃ¡cilmente la apariencia de las listas enumerativas
+
+\usepackage{graphicx} % figuras
+\usepackage{subfigure} % subfiguras
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{listings}
+\lstset{language=Python}          % Set your language (you can change the language for each code-block optionally)
+
+\definecolor{gris}{RGB}{220,220,220}
+	
+\usepackage{float} % para controlar la situaciÃ³n de los entornos flotantes
+
+\restylefloat{figure}
+\restylefloat{table} 
+\setlength{\parindent}{0mm}
+
+
+\usepackage[bookmarks=true,
+            bookmarksnumbered=false, % true means bookmarks in 
+                                     % left window are numbered
+            bookmarksopen=false,     % true means only level 1
+                                     % are displayed.
+            colorlinks=true,
+            allcolors=blue,
+            urlcolor=cyan]{hyperref}
+\definecolor{webblue}{rgb}{0, 0, 0.5}  % less intense blue
+
+
+\title{\Huge Inteligencia de Negocio. Práctica 3:\\
+Competición de Kaggle \vspace{5mm}}
+
+\author{\LARGE Patricia Córdoba Hidalgo \vspace{2mm}\\
+  \Large patriciacorhid@correo.ugr.es \vspace{2mm}\\
+  \Large Grupo 2 (Viernes) \vspace{5mm}}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+% \begin{figure}[H]
+%   \centering
+%   \subfigure[ZeroR]{\includegraphics[width=57mm]{imagenes/hip_zeror}}
+%   \subfigure[SVM]{\includegraphics[width=57mm]{imagenes/hip_svm}}
+%   \subfigure[k-nn]{\includegraphics[width=57mm]{imagenes/hip_knn}}
+% \end{figure}
+
+% \begin{figure}[H]
+%   \centering
+%   \subfigure[Árbol de decisión]{\includegraphics[width=58mm]{imagenes/hip_arbol}}
+%   \subfigure[MLP]{\includegraphics[width=55mm]{imagenes/hip_mlp}}
+%   \subfigure[Random Forest]{\includegraphics[width=60mm]{imagenes/hip_rf}}
+% \end{figure}
+
+\section{Lista de intentos}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Archivo}} & \textbf{Fecha} & \textbf{Pos.} & \textbf{Acc. Train} & \textbf{Acc. Test} & \textbf{Preprocesado} & \textbf{Algoritmos} &\textbf{Parámetros}  \\ \hline
+  p3\_00.csv & \begin{tabular}[c]{@{}l@{}}13:20:11\\ 20/12/20\end{tabular} & 7 & 0.826657 & 0.75237 & \begin{tabular}[c]{@{}l@{}}Eliminación de\\ la variable Descuento\\ Uso de Labelencoder\end{tabular} & Random Forest & \begin{tabular}[c]{@{}l@{}}criterion = gini\\ n\_estimators = 150\\ ccp\_alpha=0\end{tabular} \\ \hline
+
+  p3\_01.csv & \begin{tabular}[c]{@{}l@{}}19:03:32\\ 20/12/20\end{tabular} & 4 & 0.901557 & 0.76186 & SMOTE & Random Forest & \begin{tabular}[c]{@{}l@{}}criterion = entropy\\ n\_estimators = 220\\ ccp\_alpha=0.00023\end{tabular} \\ \hline
+
+  p3\_02.csv & \begin{tabular}[c]{@{}l@{}}15:40:15\\ 21/12/20\end{tabular} & 4 & 0.900445 & 0.75582 & \begin{tabular}[c]{@{}l@{}} Cambio de nombres\\ por marcas\end{tabular} & Random Forest & \begin{tabular}[c]{@{}l@{}}criterion = entropy\\ n\_estimators = 130\\ ccp\_alpha=0\end{tabular} \\ \hline
+
+  p3\_04.csv & \begin{tabular}[c]{@{}l@{}}20:49:52\\ 21/12/20\end{tabular} & 2 & 0.86529 & 0.79637 & \begin{tabular}[c]{@{}l@{}} Normalización +\\ OneHotEncoder\end{tabular} & MLP & \begin{tabular}[c]{@{}l@{}}activation = tanh\\ hidden\_layer\_sizes = \\=(300,300) \\ alpha=default\end{tabular} \\ \hline
+
+  p3\_05.csv & \begin{tabular}[c]{@{}l@{}}20:52:47\\ 21/12/20\end{tabular} & 2 & 0.881868 & 0.68162 & \begin{tabular}[c]{@{}l@{}} Normalización +\\ OneHotEncoder\end{tabular} & Knn & n\_neighbors = 1 \\ \hline
+
+  p3\_06.csv & \begin{tabular}[c]{@{}l@{}}15:07:36\\ 22/12/20\end{tabular} & 3 & 0.920356 & 0.79982 & \begin{tabular}[c]{@{}l@{}} Normalización +\\ OneHotEncoder\end{tabular} & \begin{tabular}[c]{@{}l@{}} Gradient\\ Boosting\end{tabular} & \begin{tabular}[c]{@{}l@{}} n\_estimators = 760\\ min\_sample\_leaf = 8 \\ learning\_rate = 0.1\end{tabular} \\ \hline
+
+  p3\_07.csv & \begin{tabular}[c]{@{}l@{}}17:25:41\\ 22/12/20\end{tabular} & 3 & 0.9330367 & 0.80241 & \begin{tabular}[c]{@{}l@{}} Normalización +\\ OneHotEncoder\end{tabular} & \begin{tabular}[c]{@{}l@{}} Stacking con \\ Gradient\\ Boosting \\ MLP y \\ Random Forest\end{tabular} & \begin{tabular}[c]{@{}l@{}} final\_estimator = \\ LogisticRegression \\con max\_iters = 400 \end{tabular} \\ \hline
+
+  p3\_08.csv & \begin{tabular}[c]{@{}l@{}}16:53:58\\ 24/12/20\end{tabular} & 3 & 0.934805 & 0.79376 & \begin{tabular}[c]{@{}l@{}} Normalización +\\ OneHotEncoder +\\ LocalOutliersFactor \end{tabular} & \begin{tabular}[c]{@{}l@{}} Stacking con \\ Gradient\\ Boosting \\ MLP y \\ Random Forest\end{tabular} & \begin{tabular}[c]{@{}l@{}} final\_estimator = \\ LogisticRegression \\con max\_iters = 400 \end{tabular} \\ \hline
+
+  p3\_09.csv & \begin{tabular}[c]{@{}l@{}}20:34:30\\ 24/12/20\end{tabular} & 3 & 0.9339265 & 0.80845 & \begin{tabular}[c]{@{}l@{}} Normalización +\\ OneHotEncoder \end{tabular} & \begin{tabular}[c]{@{}l@{}} Stacking con \\ Gradient\\ Boosting \\ MLP \\ Random Forest \\ y \\lightbmClassifier\end{tabular} & \begin{tabular}[c]{@{}l@{}} final\_estimator = \\ LogisticRegression \\con max\_iters = 400 \\------------\\ boosting\_type = \\ = 'goos' \\ num\_leaves = 35 \\ max\_depth = 10 \\ n\_estimators = 150 \end{tabular} \\ \hline
+
+  p3\_10.csv & \begin{tabular}[c]{@{}l@{}}20:36:50\\ 24/12/20\end{tabular} & 1 & 0.930033 & 0.82830 & \begin{tabular}[c]{@{}l@{}} Normalización +\\ OneHotEncoder \end{tabular} & \begin{tabular}[c]{@{}l@{}} Stacking con \\ Gradient\\ Boosting \\ MLP \\ y \\lightbmClassifier\end{tabular} & \begin{tabular}[c]{@{}l@{}} final\_estimator = \\ LogisticRegression \\con max\_iters = 400 \\------------\\ boosting\_type = \\ = 'goos' \\ num\_leaves = 35 \\ max\_depth = 10 \\ n\_estimators = 150 \end{tabular} \\ \hline
+  
+
+\end{tabular}
+\end{center}
+
+\end{document}
